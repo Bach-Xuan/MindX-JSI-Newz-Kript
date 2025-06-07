@@ -1,0 +1,82 @@
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    /* background: url('./img/sign-up-bg.avif') center/cover no-repeat; */
+    z-index: -1;
+}
+
+form {
+    top: 15vh;
+    left: 35vw;
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+h1 {
+    animation: float 3s ease-in-out infinite;
+}
+
+h1,
+p {
+    cursor: default;
+}
+
+h1,
+p,
+#submit {
+    user-select: none;
+}
+
+input[type="password"] {
+    position: relative;
+}
+
+input[type="email"],
+input[type="password"] {
+    border: 0.0625rem solid #4a73e8;
+}
+
+#eye {
+    position: absolute;
+    top: 2vh;
+    right: 2vw;
+    color: #4a73e8;
+    background-color: white;
+    cursor: pointer;
+}
+
+#submit {
+    height: 10vh;
+    width: 10vw;
+    color: white;
+    background-color: #4a73e8;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.25rem;
+    font-weight: 900;
+}
+
+#google {
+    background-color: white;
+    border: none;
+}
+
+img {
+    height: 5vh;
+    width: 5vw;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}

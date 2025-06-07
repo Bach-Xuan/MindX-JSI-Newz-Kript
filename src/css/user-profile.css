@@ -1,0 +1,74 @@
+form {
+    top: 10vh;
+    left: 10vw;
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+form > p {
+    margin: 0;
+}
+
+h1,
+h2 {
+    animation: float 3s ease-in-out infinite;
+}
+
+h1,
+h2,
+p,
+label {
+    cursor: default;
+}
+
+h1,
+h2,
+p,
+label,
+#btn {
+    user-select: none;
+}
+
+input[type="password"] {
+    position: relative;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    border: 0.0625rem solid #4a73e8;
+}
+
+.eye {
+    position: absolute;
+    top: 2vh;
+    right: 2vw;
+    color: #4a73e8;
+    background-color: white;
+    cursor: pointer;
+}
+
+#btn {
+    height: 10vh;
+    width: 15vw;
+    color: white;
+    background-color: #4a73e8;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.25rem;
+    font-weight: 900;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
