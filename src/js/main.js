@@ -1,3 +1,6 @@
+import { db } from './firebase-config.js';
+import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/11.8.0/firebase-firestore.js';
+
 async function fetchNewsData() {
     const apiUrl = "https://newsdata.io/api/1/latest?apikey=pub_6851165a998287bd633cd273478508dd9fdfe&category=politics&country=au&language=en";
 
@@ -64,7 +67,88 @@ async function fetchNewsData() {
             };
             categories.appendChild(categoryItem);
         });
+
+        // Fetch and display Firestore articles
+        await fetchFirestoreArticles();
+
     } catch (error) {
         console.error("Error fetching data:", error);
     }
 }
+
+async function fetchFirestoreArticles() {
+    try {
+        const querySnapshot = await getDocs(collection(db, "articles"));
+        const firestoreArticles = [];
+
+        querySnapshot.forEach((doc) => {
+            const articleData = doc.data();
+            firestoreArticles.push({
+                id: doc.id,
+                title: articleData.title,
+                description: articleData.description,
+                content: articleData.content,
+                isFirestore: true // Flag to identify Firestore articles
+            });
+        });
+
+        // Display Firestore articles in a separate section
+        displayFirestoreArticles(firestoreArticles);
+
+    } catch (error) {
+        console.error("Error fetching Firestore articles:", error);
+    }
+}
+
+function displayFirestoreArticles(articles) {
+    // Create or find the non-api articles section
+    let nonApiSection = document.querySelector(".non-api-section");
+
+    if (!nonApiSection) {
+        // Create the section if it doesn't exist
+        nonApiSection = document.createElement("section");
+        nonApiSection.classList.add("non-api-section");
+        nonApiSection.innerHTML = `
+            <div class="content-container">
+                <h2 class="section-title">Featured Articles</h2>
+                <div class="non-api-articles"></div>
+            </div>
+        `;
+
+        // Insert after the categories section
+        const categoriesSection = document.querySelector(".categories");
+        if (categoriesSection) {
+            categoriesSection.parentNode.insertBefore(nonApiSection, categoriesSection.nextSibling);
+        } else {
+            document.body.appendChild(nonApiSection);
+        }
+    }
+
+    const articlesContainer = nonApiSection.querySelector(".non-api-articles");
+    articlesContainer.innerHTML = ""; // Clear existing content
+
+    articles.forEach(article => {
+        const articleElement = document.createElement("article");
+        articleElement.classList.add("non-api");
+        articleElement.innerHTML = `
+            <div class="non-api-content">
+                <h3>${article.title}</h3>
+                <p class="non-api-description">${article.description}</p>
+                <div class="non-api-preview">${article.content.substring(0, 150)}...</div>
+                <div class="non-api-actions">
+                    <button class="read-more-btn">Read More</button>
+                </div>
+            </div>
+        `;
+
+        articleElement.onclick = () => {
+            localStorage.setItem('selectedArticle', JSON.stringify(article));
+            location.href = 'article.html';
+        };
+
+        articlesContainer.appendChild(articleElement);
+    });
+}
+
+// Initialize the app
+document.addEventListener('DOMContentLoaded', fetchNewsData);
