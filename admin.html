@@ -4,14 +4,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="./src/css/admin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"
+        defer></script>
 </head>
 
 <body>
-    <form>
-        
-    </form>
-    <button id="logOut">Log Out!</button>
+    <div class="sidebar">
+        <h1><span style="text-decoration: #4a73e8 dashed underline;">ADMIN</span> DASHBOARD</h1>
+        <a href="#" onclick="showSection('overview', this)" class="active">OVERVIEW</a>
+        <a href="#" onclick="showSection('create', this)">CREATE ARTICLE</a>
+        <a href="#" onclick="showSection('update', this)">UPDATE ARTICLE</a>
+        <a href="#" onclick="showSection('delete', this)">DELETE ARTICLE</a>
+        <a href="#" onclick="showSection('logOut', this)">LOG OUT</a>
+    </div>
+    <div class="divider"></div>
+
+    <div class="main-content">
+        <div class="section active" id="overview">
+            <h1>Dashboard Overview</h1>
+            <p>Welcome to the admin dashboard!</p>
+        </div>
+
+        <div class="section" id="create">
+            <form id="publish" class="needs-validation" novalidate>
+                <h1>PUBLISH NEW ARTICLE</h1>
+                <h6>ADD TITLE</h6>
+                <input type="text" class="form-control" id="title" required>
+                <h6>SELECT CATEGORY</h6>
+                <select class="form-select" id="category" required>
+                    <option value="">Select one category from the menu</option>
+                    <option value="world">WORLD</option>
+                    <option value="business">BUSINESS</option>
+                    <option value="health">HEALTH</option>
+                    <option value="education">EDUCATION</option>
+                    <option value="entertainment">ENTERTAINMENT</option>
+                    <option value="sports">SPORTS</option>
+                    <option value="technology">TECHNOLOGY</option>
+                </select>
+                <h6>ADD AUTHOR</h6>
+                <input type="text" class="form-control" id="author" required>
+                <h6>ADD DESCRIPTION</h6>
+                <textarea class="form-control" id="description"></textarea>
+                <h6>ADD CONTENT</h6>
+                <textarea class="form-control" id="content"></textarea>
+                <button type="submit">PUBLISH!</button>
+            </form>
+        </div>
+
+        <div class="section" id="update">
+            <h1>Update Article</h1>
+            <p>Update functionality coming soon...</p>
+        </div>
+
+        <div class="section" id="delete">
+            <h1>Delete Article</h1>
+            <p>Delete functionality coming soon...</p>
+        </div>
+
+        <div class="section" id="logOut">
+            <h1>Are you sure want to log out?</h1>
+            <button id="btn" class="btn btn-danger">Log Out!</button>
+        </div>
+    </div>
+
+    <script type="module" src="./src/js/admin-ux.js"></script>
 </body>
 
 </html>

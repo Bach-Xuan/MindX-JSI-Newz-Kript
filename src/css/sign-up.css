@@ -1,5 +1,5 @@
 body::after {
-    content: "";
+    content: '';
     position: fixed;
     inset: 0;
     background: url('../img/sign-up-bg.avif') center/cover no-repeat;
@@ -16,7 +16,23 @@ form {
 }
 
 h1 {
+    position: relative;
+    text-align: center;
     animation: float 3s ease-in-out infinite;
+    will-change: transform;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -1vh;
+    left: 10vw;
+    height: 1vh;
+    width: 10vw;
+    background: linear-gradient(90deg, #4a73e8, transparent);
+    border-radius: 1rem;
+    animation: shimmer 3s ease-in-out infinite;
+    will-change: opacity, transform;
 }
 
 h1,
@@ -26,6 +42,7 @@ p {
 
 h1,
 p,
+div,
 #btn {
     user-select: none;
 }
@@ -38,10 +55,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"] {
     border: 0.0625rem solid #4a73e8;
-}
-
-div {
-    user-select: none;
+    border-radius: 1rem;
 }
 
 .eye {
@@ -53,15 +67,67 @@ div {
     cursor: pointer;
 }
 
+.eye:hover {
+    transform: scale(1.1);
+}
+
+p a {
+    position: relative;
+    color: #4a73e8;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+p a::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5vh;
+    left: 0;
+    height: 0.5vh;
+    width: 100%;
+    background: linear-gradient(90deg, #4a73e8, transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-in-out;
+    will-change: transform;
+}
+
+p a:hover::after {
+    transform: scaleX(1);
+}
+
 #btn {
     height: 10vh;
     width: 15vw;
+    margin-bottom: 10vh;
     color: white;
     background-color: #4a73e8;
-    border: none;
-    border-radius: 1rem;
     font-size: 1.25rem;
     font-weight: 900;
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    will-change: transform;
+}
+
+#btn::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transition: left 0.3s ease-in-out;
+}
+
+#btn:hover {
+    transform: translateY(-1vh);
+}
+
+#btn:hover::before {
+    left: 100%;
 }
 
 @keyframes float {
@@ -72,6 +138,19 @@ div {
     }
 
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-1vh);
+    }
+}
+
+@keyframes shimmer {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
     }
 }

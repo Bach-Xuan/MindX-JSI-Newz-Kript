@@ -1,0 +1,311 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7ff 0%, #e8f0fe 100%);
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Sidebar styling */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 280px;
+    background: linear-gradient(180deg, #4a73e8 0%, #3b5ee0 100%);
+    padding: 30px 0;
+    box-shadow: 4px 0 20px rgba(74, 115, 232, 0.15);
+    z-index: 1000;
+}
+
+.sidebar h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 0 20px;
+}
+
+.sidebar a {
+    display: block;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.9);
+    padding: 18px 30px;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: left;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.sidebar a:hover::before {
+    width: 100%;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    color: white;
+    border-left: 4px solid #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    transform: translateX(8px);
+}
+
+.sidebar a.active {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Divider */
+.divider {
+    position: fixed;
+    top: 0;
+    left: 280px;
+    height: 100vh;
+    width: 1px;
+    background: linear-gradient(180deg, rgba(74, 115, 232, 0.1) 0%, rgba(74, 115, 232, 0.3) 50%, rgba(74, 115, 232, 0.1) 100%);
+}
+
+/* Main content */
+.main-content {
+    margin-left: 280px;
+    padding: 40px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section {
+    display: none;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px 0;
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(74, 115, 232, 0.1);
+    border: 1px solid rgba(74, 115, 232, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+.section.active {
+    display: block;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Headings */
+.section h1 {
+    color: #4a73e8;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.section h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #4a73e8, #a4bcfe);
+    border-radius: 2px;
+}
+
+.section h6 {
+    color: #4a73e8;
+    font-weight: 600;
+    margin-top: 25px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.section p {
+    color: #666;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Form styling */
+.form-control,
+.form-select {
+    border: 2px solid #e8f0fe;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #fafbff;
+    margin-bottom: 20px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #4a73e8;
+    box-shadow: 0 0 0 4px rgba(74, 115, 232, 0.1);
+    background: white;
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: #a0a0a0;
+}
+
+/* Textarea specific */
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Button styling */
+button[type="submit"] {
+    background: linear-gradient(135deg, #4a73e8 0%, #3b5ee0 100%);
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    width: 100%;
+    box-shadow: 0 4px 16px rgba(74, 115, 232, 0.3);
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(74, 115, 232, 0.4);
+    background: linear-gradient(135deg, #3b5ee0 0%, #2c4fd6 100%);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(74, 115, 232, 0.3);
+}
+
+/* Log out button */
+#btn.btn-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 14px 28px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(220, 53, 69, 0.3);
+}
+
+#btn.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(220, 53, 69, 0.4);
+    background: linear-gradient(135deg, #c82333 0%, #a71e2a 100%);
+}
+
+/* Overview section specific styling */
+#overview {
+    text-align: center;
+}
+
+#overview p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 30px;
+}
+
+/* Form validation styles */
+.form-control:invalid {
+    border-color: #dc3545;
+}
+
+.form-control:valid {
+    border-color: #28a745;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .divider {
+        display: none;
+    }
+
+    .section {
+        padding: 30px 20px;
+    }
+
+    .section h1 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4a73e8;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3b5ee0;
+}
