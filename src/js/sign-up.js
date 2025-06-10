@@ -5,18 +5,16 @@ import {
 } from 'https://www.gstatic.com/firebasejs/11.8.0/firebase-auth.js';
 
 function initBootstrapValidation(s = '.needs-validation', f = '.form-control') {
-    const newPwd = document.getElementById('newPwd');
-    const confirmPwd = document.getElementById('confirmPwd');
+    const pwd1 = document.getElementById('pwd1');
+    const pwd2 = document.getElementById('pwd2');
     document.querySelectorAll(`${s} ${f}`).forEach(input => {
         ['input', 'blur'].forEach(ev => {
             input.addEventListener(ev, () => {
                 input.classList.remove('is-valid', 'is-invalid');
-                input.classList.add((input.id === 'username'
-                    ? /^(?=.*[A-Za-z])[A-Za-z0-9_.-]{4,30}$/.test(input.value)
-                    : input.checkValidity()) ? 'is-valid' : 'is-invalid');
-                if ((input === newPwd || input === confirmPwd) && newPwd.value && confirmPwd.value) {
-                    confirmPwd.classList.remove('is-valid', 'is-invalid');
-                    confirmPwd.classList.add(newPwd.value === confirmPwd.value ? 'is-valid' : 'is-invalid');
+                input.classList.add(input.checkValidity() ? 'is-valid' : 'is-invalid');
+                if ((input === pwd1 || input === pwd2) && pwd1.value && pwd2.value) {
+                    pwd2.classList.remove('is-valid', 'is-invalid');
+                    pwd2.classList.add(pwd1.value === pwd2.value ? 'is-valid' : 'is-invalid');
                 }
             });
         });
@@ -44,8 +42,8 @@ function signUp() {
             document.getElementById('signUp').classList.add('was-validated');
             return;
         }
-        const email = document.getElementById('email').value,
-            password = document.getElementById('newPwd').value;
+        const email = document.getElementById('email').value.trim(),
+            password = document.getElementById('pwd1').value;
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 updateProfile(auth.currentUser, {
