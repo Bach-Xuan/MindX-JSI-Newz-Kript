@@ -11,7 +11,9 @@ function initBootstrapValidation(s = '.needs-validation', f = '.form-control') {
         ['input', 'blur'].forEach(ev => {
             input.addEventListener(ev, () => {
                 input.classList.remove('is-valid', 'is-invalid');
-                input.classList.add(input.checkValidity() ? 'is-valid' : 'is-invalid');
+                if (input.value) {
+                    input.classList.add(input.checkValidity() ? 'is-valid' : 'is-invalid');
+                }
                 if ((input === pwd1 || input === pwd2) && pwd1.value && pwd2.value) {
                     pwd2.classList.remove('is-valid', 'is-invalid');
                     pwd2.classList.add(pwd1.value === pwd2.value ? 'is-valid' : 'is-invalid');

@@ -34,7 +34,7 @@ function login() {
             document.getElementById('login').classList.add('was-validated');
             return;
         }
-        const email = document.getElementById('email').value,
+        const email = document.getElementById('email').value.trim(),
             password = document.getElementById('pwd').value;
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {

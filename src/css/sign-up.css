@@ -2,7 +2,7 @@ body::after {
     content: '';
     position: fixed;
     inset: 0;
-    background: url('../img/sign-up.avif') center/cover;
+    background: url('../img/bg.avif') center/cover;
     z-index: -1;
 }
 
@@ -19,20 +19,18 @@ h1 {
     position: relative;
     text-align: center;
     animation: float 3s ease-in-out infinite;
-    will-change: transform;
 }
 
 h1::after {
     content: '';
     position: absolute;
     bottom: -1vh;
-    left: 10vw;
+    left: 11vw;
     height: 1vh;
-    width: 10vw;
+    width: 8vw;
     background: linear-gradient(90deg, #4a73e8, transparent);
     border-radius: 1rem;
     animation: shimmer 3s ease-in-out infinite;
-    will-change: opacity, transform;
 }
 
 h1,
@@ -41,8 +39,8 @@ p {
 }
 
 h1,
-p,
 div,
+p,
 #btn {
     user-select: none;
 }
@@ -54,8 +52,14 @@ input[type="password"] {
 input[type="text"],
 input[type="email"],
 input[type="password"] {
+    color: #4a73e8;
     border: 0.0625rem solid #4a73e8;
     border-radius: 1rem;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+    color: #4a73e8;
 }
 
 .eye {
@@ -89,7 +93,6 @@ p a::after {
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease-in-out;
-    will-change: transform;
 }
 
 p a:hover::after {

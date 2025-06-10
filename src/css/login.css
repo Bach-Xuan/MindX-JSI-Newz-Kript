@@ -2,13 +2,13 @@ body::after {
     content: "";
     position: fixed;
     inset: 0;
-    /* background: url('./img/sign-up-bg.avif') center/cover no-repeat; */
+    background: url('../img/bg.avif') center/cover;
     z-index: -1;
 }
 
 form {
     top: 15vh;
-    left: 35vw;
+    left: 10vw;
     width: 30vw;
     display: flex;
     flex-direction: column;
@@ -16,7 +16,21 @@ form {
 }
 
 h1 {
+    position: relative;
+    text-align: center;
     animation: float 3s ease-in-out infinite;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -1vh;
+    left: 12.5vw;
+    height: 1vh;
+    width: 5vw;
+    background: linear-gradient(90deg, #4a73e8, transparent);
+    border-radius: 1rem;
+    animation: shimmer 3s ease-in-out infinite;
 }
 
 h1,
@@ -25,8 +39,9 @@ p {
 }
 
 h1,
+div,
 p,
-#submit {
+#btn {
     user-select: none;
 }
 
@@ -36,7 +51,14 @@ input[type="password"] {
 
 input[type="email"],
 input[type="password"] {
+    color: #4a73e8;
     border: 0.0625rem solid #4a73e8;
+    border-radius: 1rem;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+    color: #4a73e8;
 }
 
 #eye {
@@ -48,20 +70,76 @@ input[type="password"] {
     cursor: pointer;
 }
 
-#submit {
+#eye:hover {
+    transform: scale(1.1);
+}
+
+p a {
+    position: relative;
+    color: #4a73e8;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+p a::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5vh;
+    left: 0;
+    height: 0.5vh;
+    width: 100%;
+    background: linear-gradient(90deg, #4a73e8, transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-in-out;
+}
+
+p a:hover::after {
+    transform: scaleX(1);
+}
+
+#btn {
     height: 10vh;
     width: 10vw;
     color: white;
     background-color: #4a73e8;
-    border: none;
-    border-radius: 1rem;
     font-size: 1.25rem;
     font-weight: 900;
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    will-change: transform;
+}
+
+#btn::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transition: left 0.3s ease-in-out;
+}
+
+#btn:hover {
+    transform: translateY(-1vh);
+}
+
+#btn:hover::before {
+    left: 100%;
 }
 
 #google {
-    background-color: white;
+    margin: 0 0 10vh 0.1vw;
+    background-color: transparent;
     border: none;
+    transition: transform 0.3s ease-in-out
+}
+
+#google:hover {
+    transform: rotate(-30deg);
 }
 
 img {
@@ -78,5 +156,18 @@ img {
 
     50% {
         transform: translateY(-10px);
+    }
+}
+
+@keyframes shimmer {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
     }
 }
