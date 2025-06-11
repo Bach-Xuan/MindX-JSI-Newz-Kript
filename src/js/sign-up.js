@@ -24,16 +24,14 @@ function initBootstrapValidation(s = '.needs-validation', f = '.form-control') {
 }
 
 function togglePasswordVisibility() {
-    document.querySelectorAll('.eye').forEach(eye => {
-        eye.addEventListener('click', () => {
-            eye.parentElement.querySelector('input[type="password"], input[type="text"]').type =
-                eye.parentElement.querySelector('input[type="password"], input[type="text"]').type === 'password' ? 'text' : 'password';
-            document.querySelectorAll('.eye').forEach(eye => {
-                eye.innerHTML = eye.parentElement.querySelector('input[type="password"], input[type="text"]').type === 'text'
-                    ? '<i class="fa-regular fa-eye-slash fa-lg"></i>'
-                    : '<i class="fa-regular fa-eye fa-lg"></i>';
-            });
-        });
+    document.querySelectorAll('.form-floating input[type=password]').forEach(pwd => {
+        pwd.oninput = () =>
+            pwd.parentNode.querySelector('.eye').style.display = pwd.value ? 'block' : 'none';
+        pwd.parentNode.querySelector('.eye').onclick = () => {
+            pwd.type = pwd.type === 'password' ? 'text' : 'password';
+            pwd.parentNode.querySelector('.eye').innerHTML =
+                `<i class="fa-regular fa-eye${pwd.type === 'text' ? '-slash' : ''} fa-lg"></i>`;
+        };
     });
 }
 
