@@ -1,18 +1,25 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body::after {
-    content: "";
     position: fixed;
     inset: 0;
-    background: url('../img/bg.avif') center/cover;
     z-index: -1;
+    content: "";
+    background: url('../img/bg.avif') center/cover;
 }
 
 form {
+    position: relative;
     top: 15vh;
     left: 10vw;
-    width: 30vw;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    width: 30vw;
+    gap: 2em;
 }
 
 h1 {
@@ -22,14 +29,14 @@ h1 {
 }
 
 h1::after {
-    content: '';
     position: absolute;
     bottom: -1vh;
     left: 12.5vw;
-    height: 1vh;
+    content: '';
     width: 5vw;
-    background: linear-gradient(90deg, #4a73e8, transparent);
+    height: 1vh;
     border-radius: 1rem;
+    background: linear-gradient(90deg, #4a73e8, transparent);
     animation: shimmer 3s ease-in-out infinite;
 }
 
@@ -52,9 +59,9 @@ input[type="password"] {
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-    color: #4a73e8;
-    border: 0.0625rem solid #4a73e8;
+    border: 0.0625em solid #4a73e8;
     border-radius: 1rem;
+    color: #4a73e8;
 }
 
 input[type="email"]:focus,
@@ -63,12 +70,12 @@ input[type="password"]:focus {
 }
 
 #eye {
-    display: none;
     position: absolute;
     top: 2.25vh;
     right: 2.5vw;
-    color: #4a73e8;
+    display: none;
     background-color: white;
+    color: #4a73e8;
     cursor: pointer;
 }
 
@@ -76,51 +83,50 @@ input[type="password"]:focus {
     transform: scale(1.1);
 }
 
-p a {
+a {
     position: relative;
     color: #4a73e8;
     font-weight: 900;
     text-decoration: none;
 }
 
-p a::after {
-    content: '';
+a::after {
     position: absolute;
     bottom: -0.5vh;
     left: 0;
-    height: 0.5vh;
+    content: '';
     width: 100%;
+    height: 0.5vh;
     background: linear-gradient(90deg, #4a73e8, transparent);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease-in-out;
 }
 
-p a:hover::after {
+a:hover::after {
     transform: scaleX(1);
 }
 
 #btn {
-    height: 10vh;
     width: 10vw;
-    color: white;
-    background-color: #4a73e8;
-    font-size: 1.25rem;
-    font-weight: 900;
+    height: 10vh;
     border: none;
     border-radius: 1rem;
+    background-color: #4a73e8;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 900;
     overflow: hidden;
     transition: all 0.3s ease-in-out;
-    will-change: transform;
 }
 
 #btn::before {
-    content: '';
     position: fixed;
     top: 0;
     left: -100%;
-    height: 100%;
+    content: '';
     width: 100%;
+    height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
     transition: left 0.3s ease-in-out;
 }
@@ -135,18 +141,18 @@ p a:hover::after {
 
 #google {
     margin: 0 0 10vh 0.1vw;
-    background-color: transparent;
     border: none;
+    background-color: transparent;
     transition: transform 0.3s ease-in-out
 }
 
 #google:hover {
-    transform: rotate(-30deg);
+    transform: scale(1.1);
 }
 
 img {
-    height: 5vh;
     width: 5vw;
+    height: 5vh;
 }
 
 @keyframes float {
@@ -157,7 +163,7 @@ img {
     }
 
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-0.625rem);
     }
 }
 

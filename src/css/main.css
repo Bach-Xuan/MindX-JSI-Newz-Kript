@@ -38,20 +38,6 @@ nav {
     font-weight: 900;
 }
 
-/* BRAND-HEADER */
-.brand-header {
-    text-align: center;
-    padding: 10px;
-    color: #4a73e8;
-    font-size: 65px;
-    cursor: default;
-    user-select: none;
-}
-
-.brand-header img {
-    width: 50px;
-}
-
 /* WEATHER WIDGET */
 .weather-widget {
     padding: 50px;

@@ -26,7 +26,8 @@ function togglePasswordVisibility() {
     document.getElementById('eye').addEventListener('click', () => {
         document.getElementById('pwd').type = document.getElementById('pwd').type === 'password' ? 'text' : 'password';
         eye.innerHTML = document.getElementById('pwd').type === 'text'
-            `<i class="fa-regular fa-eye${pwd.type === 'text' ? '-slash' : ''} fa-lg"></i>`;
+            ? `<i class="fa-regular fa-eye${pwd.type === 'text' ? '-slash' : ''}"></i>`
+            : `<i class="fa-regular fa-eye${pwd.type === 'text' ? '-slash' : ''}"></i>`;
     });
 }
 
@@ -37,7 +38,7 @@ function login() {
             document.getElementById('login').classList.add('was-validated');
             return;
         }
-        const email = document.getElementById('email').value.trim(),
+        const email = document.getElementById('email').value,
             password = document.getElementById('pwd').value;
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
