@@ -6,25 +6,18 @@
     padding: 1.5% 3%;
 }
 
-.logo {
+#brand {
     display: flex;
     align-items: center;
     text-decoration: none;
+    color: #4a73e8;
+    font-size: 5rem;
+    font-weight: 900;
     transition: transform 0.3s ease-in-out;
 }
 
-.logo h1 {
-    color: #4a73e8;
-    font-size: 3rem;
-    font-weight: 900;
-}
-
-.logo:hover {
-    transform: scale(1.05);
-}
-
-.logo h1 {
-    color: #4a73e8;
+#brand:hover {
+    transform: scale(1.1);
 }
 
 #searchContainer {
@@ -54,39 +47,15 @@
     opacity: 0.7;
 }
 
-.auth-buttons {
-    display: flex;
-    gap: 1em;
-}
-
-.auth-buttons a {
-    position: relative;
-    display: inline-block;
-    padding: 0.625em 1.5em;
-    border: 1px solid #4a73e8;
-    border-radius: 1em;
+#account {
+    border:  none;
+    background: none;
     color: #4a73e8;
-    font-size: 0.875em;
-    font-weight: 600;
-    text-decoration: none;
-    text-align: center;
-    cursor: pointer;
-    overflow: hidden;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease-in-out;
 }
 
-.auth-buttons a:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(74, 115, 232, 0.3);
-}
-
-#signUp {
-    background: #4a73e8;
-    color: white;
-}
-
-#signUp:hover {
-    background: #2858d6;
+#account:hover {
+    transform: scale(1.1);
 }
 
 .nav-sub {
