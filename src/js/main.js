@@ -68,8 +68,13 @@ async function fetchNewsData() {
             categories.appendChild(categoryItem);
         });
 
-        // Fetch and display Firestore articles
-        await fetchFirestoreArticles();
+        // Collect all API articles
+        const apiArticles = data.results || [];
+        // Fetch and display Firestore articles, then save all to localStorage
+        const firestoreArticles = await fetchFirestoreArticles();
+        // Merge API and Firestore articles
+        const allArticles = [...apiArticles, ...firestoreArticles];
+        localStorage.setItem('allArticles', JSON.stringify(allArticles));
 
     } catch (error) {
         console.error("Error fetching data:", error);
@@ -94,9 +99,11 @@ async function fetchFirestoreArticles() {
 
         // Display Firestore articles in a separate section
         displayFirestoreArticles(firestoreArticles);
+        return firestoreArticles;
 
     } catch (error) {
         console.error("Error fetching Firestore articles:", error);
+        return [];
     }
 }
 

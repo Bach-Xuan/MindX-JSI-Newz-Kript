@@ -2,7 +2,7 @@ import { auth } from './firebase-config.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.8.0/firebase-auth.js';
 
 function handleUser() {
-    document.getElementById('account').addEventListener('click', () => {
+    document.getElementById('login').addEventListener('click', () => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 if (user.email === 'admin1@gmail.com') {
@@ -77,11 +77,15 @@ function saveArticleToLocalStorage(index) {
     const selectedArticle = articles[index];
     localStorage.setItem('selectedArticle', JSON.stringify(selectedArticle));
 }
+// Expose to global scope for HTML onclick usage
+window.saveArticleToLocalStorage = saveArticleToLocalStorage;
 
 function viewArticle(article) {
     localStorage.setItem('selectedArticle', JSON.stringify(article));
     window.location.href = 'article.html';
 }
+// Expose to global scope if needed elsewhere
+window.viewArticle = viewArticle;
 
 async function executeSearch() {
     const searchInput = document.getElementById('searchInput');
@@ -92,10 +96,18 @@ async function executeSearch() {
         resultsContainer.innerHTML = "";
         return;
     }
-
+    // Always fetch from API for fresh results
     const articles = await fetchNewsArticles(query);
     localStorage.setItem('articles', JSON.stringify(articles));
-    window.location.href = 'search-results.html';
+    // Also filter allArticles for fallback
+    const allArticles = JSON.parse(localStorage.getItem('allArticles') || '[]');
+    const filtered = allArticles.filter(a =>
+        (a.title && a.title.toLowerCase().includes(query.toLowerCase())) ||
+        (a.description && a.description.toLowerCase().includes(query.toLowerCase())) ||
+        (a.content && a.content.toLowerCase().includes(query.toLowerCase()))
+    );
+    localStorage.setItem('fallbackArticles', JSON.stringify(filtered));
+    window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
 }
 
 function initializeSearchResultsPage() {
@@ -128,11 +140,6 @@ function calculateLevenshteinDistance(a, b) {
 }
 
 function getNormalizedDistance(a, b) {
-    const maxLen = Math.max(a.length, b.length);
-    return maxLen === 0 ? 0 : calculateLevenshteinDistance(a, b) / maxLen;
-}
-
-function isFuzzyMatch(item, query, threshold = 0.4) {
     const lowerItem = item.toLowerCase(),
         lowerQuery = query.toLowerCase();
     return lowerItem.includes(lowerQuery) || getNormalizedDistance(lowerItem, lowerQuery) < threshold;
@@ -141,7 +148,6 @@ function isFuzzyMatch(item, query, threshold = 0.4) {
 function setupSearch() {
     const searchInput = document.getElementById('searchInput');
     const resultsContainer = document.getElementById('resultsContainer');
-    const searchButton = createSearchButton();
 
     if (searchInput && resultsContainer) {
         searchInput.addEventListener('blur', () => {
@@ -149,24 +155,10 @@ function setupSearch() {
             resultsContainer.style.display = 'none';
         });
 
-        searchButton.addEventListener('click', executeSearch);
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') executeSearch();
         });
     }
-}
-
-function createSearchButton() {
-    const searchButton = document.createElement('button');
-    searchButton.textContent = 'Search';
-    searchButton.className = 'search-button';
-
-    const searchContainer = document.getElementById('searchContainer');
-    if (searchContainer) {
-        searchContainer.appendChild(searchButton);
-    }
-
-    return searchButton;
 }
 
 document.addEventListener('DOMContentLoaded', () => {

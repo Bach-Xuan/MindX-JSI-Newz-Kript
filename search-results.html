@@ -13,6 +13,48 @@
 <body>
     <div class="article-list" id="articleList"></div>
     <script src="./src/js/navbar-ux.js"></script>
+    <script>
+      // Get query from URL
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param) || '';
+      }
+      
+      function renderResults(query) {
+        const list = document.getElementById('articleList');
+        list.className = 'article-list grid-list'; // Add grid-list class for grid styling
+        let articles = JSON.parse(localStorage.getItem('articles') || 'null');
+        if (!articles) {
+          const allArticles = JSON.parse(localStorage.getItem('allArticles') || '[]');
+          articles = allArticles.filter(a =>
+            (a.title && a.title.toLowerCase().includes(query.toLowerCase())) ||
+            (a.description && a.description.toLowerCase().includes(query.toLowerCase())) ||
+            (a.content && a.content.toLowerCase().includes(query.toLowerCase()))
+          );
+        }
+        if (!query) {
+          list.innerHTML = '<p>No search query provided.</p>';
+          return;
+        }
+        if (!articles || articles.length === 0) {
+          list.innerHTML = `<p>No results found for '<b>${query}</b>'.</p>`;
+        } else {
+          list.innerHTML = articles.map((a, i) =>
+            `<div class="article-result-card" tabindex="0" onclick='localStorage.setItem("selectedArticle", JSON.stringify(${JSON.stringify(a)}));window.location.href="article.html";'>
+              <img class="article-result-img" src="${a.image_url || './image/150x100.png'}" alt="${a.title || 'No Title'}" />
+              <div class="article-result-info">
+                <h3 class="article-result-title">${a.title || 'No Title'}</h3>
+                <p class="article-result-desc">${a.description ? a.description.substring(0, 80) + (a.description.length > 80 ? '...' : '') : ''}</p>
+              </div>
+            </div>`
+          ).join('');
+        }
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        const query = getQueryParam('q');
+        renderResults(query);
+      });
+    </script>
 </body>
 
 </html>
