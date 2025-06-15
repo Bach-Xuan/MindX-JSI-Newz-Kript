@@ -14,63 +14,65 @@
 </head>
 
 <body>
-    <div class="sidebar">
-        <h1><span style="text-decoration: #4a73e8 dashed underline;">ADMIN</span> DASHBOARD</h1>
-        <a href="#" onclick="showSection('overview', this)" class="active">OVERVIEW</a>
-        <a href="#" onclick="showSection('create', this)">CREATE ARTICLE</a>
-        <a href="#" onclick="showSection('update', this)">UPDATE ARTICLE</a>
-        <a href="#" onclick="showSection('delete', this)">DELETE ARTICLE</a>
-        <a href="#" onclick="showSection('logOut', this)">LOG OUT</a>
-    </div>
-    <div class="divider"></div>
-
-    <div class="main-content">
-        <div class="section active" id="overview">
-            <h1>Dashboard Overview</h1>
-            <p>Welcome to the admin dashboard!</p>
+    <main>
+        <div class="sidebar">
+            <h1><span style="text-decoration: #4a73e8 dashed underline;">ADMIN</span> DASHBOARD</h1>
+            <a href="#" onclick="showSection('overview', this)" class="active">OVERVIEW</a>
+            <a href="#" onclick="showSection('create', this)">CREATE ARTICLE</a>
+            <a href="#" onclick="showSection('delete', this)">UPDATE ARTICLE</a>
+            <a href="#" onclick="showSection('logOut', this)">LOG OUT</a>
         </div>
+        <div class="main-content">
+            <div class="section active" id="overview">
+                <h1>Dashboard Overview</h1>
+                <p>Welcome to the admin dashboard!</p>
+            </div>
+            <div class="section" id="create">
+                <form id="publish" class="needs-validation" novalidate>
+                    <h1>PUBLISH NEW ARTICLE</h1>
+                    <h6>ADD TITLE</h6>
+                    <input type="text" class="form-control" id="title" required>
+                    <h6>SELECT CATEGORY</h6>
+                    <select class="form-select" id="category" required>
+                        <option value="">Select one category from the menu</option>
+                        <option value="world">WORLD</option>
+                        <option value="business">BUSINESS</option>
+                        <option value="health">HEALTH</option>
+                        <option value="education">EDUCATION</option>
+                        <option value="entertainment">TECHNOLOGY</option>
+                        <option value="sports">SCIENCE</option>
+                        <option value="technology">SPORTS</option>
+                        <option value="entertainment">ENTERTAINMENT</option>
+                    </select>
+                    <h6>ADD AUTHOR</h6>
+                    <input type="text" class="form-control" id="author" required>
+                    <h6>ADD DESCRIPTION</h6>
+                    <textarea class="form-control" id="description"></textarea>
+                    <h6>ADD CONTENT</h6>
+                    <textarea class="form-control" id="content"></textarea>
+                    <button type="submit">PUBLISH!</button>
+                </form>
+            </div>
 
-        <div class="section" id="create">
-            <form id="publish" class="needs-validation" novalidate>
-                <h1>PUBLISH NEW ARTICLE</h1>
-                <h6>ADD TITLE</h6>
-                <input type="text" class="form-control" id="title" required>
-                <h6>SELECT CATEGORY</h6>
-                <select class="form-select" id="category" required>
-                    <option value="">Select one category from the menu</option>
-                    <option value="world">WORLD</option>
-                    <option value="business">BUSINESS</option>
-                    <option value="health">HEALTH</option>
-                    <option value="education">EDUCATION</option>
-                    <option value="entertainment">ENTERTAINMENT</option>
-                    <option value="sports">SPORTS</option>
-                    <option value="technology">TECHNOLOGY</option>
-                </select>
-                <h6>ADD AUTHOR</h6>
-                <input type="text" class="form-control" id="author" required>
-                <h6>ADD DESCRIPTION</h6>
-                <textarea class="form-control" id="description"></textarea>
-                <h6>ADD CONTENT</h6>
-                <textarea class="form-control" id="content"></textarea>
-                <button type="submit">PUBLISH!</button>
-            </form>
-        </div>
+            <div class="section" id="delete">
+                <div class="non-api">
+                    <div class="delete-section">
+                        <div class="content-container">
+                            <h2 class="section-title">Featured Articles</h2>
+                            <div class="non-api-articles"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="section" id="update">
-            <h1>Update Article</h1>
-            <p>Update functionality coming soon...</p>
-        </div>
+            <div class="section" id="update"></div>
 
-        <div class="section" id="delete">
-            <h1>Delete Article</h1>
-            <p>Delete functionality coming soon...</p>
+            <div class="section" id="logOut">
+                <h1>Are you sure want to log out?</h1>
+                <button id="btn" class="btn btn-danger">Log Out!</button>
+            </div>
         </div>
-
-        <div class="section" id="logOut">
-            <h1>Are you sure want to log out?</h1>
-            <button id="btn" class="btn btn-danger">Log Out!</button>
-        </div>
-    </div>
+    </main>
 
     <script type="module" src="./src/js/admin-ux.js"></script>
 </body>

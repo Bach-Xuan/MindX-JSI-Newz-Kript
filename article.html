@@ -127,6 +127,75 @@
                 document.body.innerHTML = '<p>Article not found. Please go back and select an article.</p>';
             }
         });
+        // article.js - JavaScript for displaying individual articles
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the selected article from localStorage
+            const selectedArticle = localStorage.getItem('selectedArticle');
+
+            if (selectedArticle) {
+                try {
+                    const article = JSON.parse(selectedArticle);
+                    displayArticle(article);
+                } catch (error) {
+                    console.error('Error parsing article data:', error);
+                    showError('Error loading article data');
+                }
+            } else {
+                showError('No article selected');
+            }
+        });
+
+        function displayArticle(article) {
+            // Update page title
+            document.title = article.title || 'Article';
+
+            // Find and update article elements
+            const titleElement = document.getElementById('article-title');
+            const authorElement = document.getElementById('article-author');
+            const categoryElement = document.getElementById('article-category');
+            const descriptionElement = document.getElementById('article-description');
+            const contentElement = document.getElementById('article-content');
+
+            if (titleElement) titleElement.textContent = article.title || 'Untitled';
+            if (authorElement) authorElement.textContent = `By ${article.author || 'Unknown Author'}`;
+            if (categoryElement) categoryElement.textContent = article.category || 'Uncategorized';
+            if (descriptionElement) descriptionElement.textContent = article.description || '';
+            if (contentElement) {
+                // Convert line breaks to paragraphs for better formatting
+                const formattedContent = article.content ?
+                    article.content.split('\n').map(paragraph =>
+                        paragraph.trim() ? `<p>${paragraph.trim()}</p>` : ''
+                    ).join('') : '<p>No content available</p>';
+
+                contentElement.innerHTML = formattedContent;
+            }
+
+            // Add back button functionality
+            const backButton = document.getElementById('back-button');
+            if (backButton) {
+                backButton.addEventListener('click', function () {
+                    window.history.back();
+                });
+            }
+        }
+
+        function showError(message) {
+            const errorContainer = document.getElementById('error-container') || document.body;
+            errorContainer.innerHTML = `
+        <div style="text-align: center; padding: 50px; color: #dc3545;">
+            <h2>Error</h2>
+            <p>${message}</p>
+            <button onclick="window.history.back()" style="
+                background: #4a73e8; 
+                color: white; 
+                border: none; 
+                padding: 10px 20px; 
+                border-radius: 5px; 
+                cursor: pointer;
+            ">Go Back</button>
+        </div>
+    `;
+        }
     </script>
     <script type="module" src="./src/js/main.js"></script>
 </body>
