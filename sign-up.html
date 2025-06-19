@@ -38,7 +38,7 @@
                 <input type="password" class="form-control" id="pwd1" placeholder="" pattern="^(?=.*\d)[^\s]{8,32}$"
                     required>
                 <label>NEW PASSWORD</label>
-                <span class="eye"><i class="fa-regular fa-eye fa-lg"></i></span>
+                <button type="button" class="eye"><i class="fa-regular fa-eye fa-lg"></i></button>
                 <div class="invalid-feedback">
                     Must be 8-32 non-whitespace characters; at least one number required.
                 </div>
@@ -46,17 +46,19 @@
             <div class="form-floating">
                 <input type="password" class="form-control" id="pwd2" placeholder="" pattern="^\S+$" required>
                 <label>CONFIRM PASSWORD</label>
-                <span class="eye"><i class="fa-regular fa-eye fa-lg"></i></span>
+                <button type="button" class="eye"><i class="fa-regular fa-eye fa-lg"></i></button>
                 <div class="invalid-feedback">
                     Must match with your new password.
                 </div>
             </div>
+            <p>Already have an account? <a href="login.html">LOGIN NOW!</a></p>
             <p>
-                By creating an account, you agree to our <a href="#">TERMS OF SERVICE!</a>
+                By creating an account, you agree to our <a href="#" target="_blank">TERMS OF SERVICE!</a>
             </p>
             <button type="submit" id="btn">JOIN NEWZ KRIPT!</button>
         </form>
     </main>
+    <h1>NEWZ KRIPT</h1>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"

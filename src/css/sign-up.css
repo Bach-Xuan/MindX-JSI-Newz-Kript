@@ -1,3 +1,7 @@
+html {
+    font-size: 80%;
+}
+
 body::after {
     position: fixed;
     inset: 0;
@@ -7,59 +11,43 @@ body::after {
 }
 
 form {
-    position: relative;
-    top: 10vh;
-    left: 10vw;
     display: flex;
     flex-direction: column;
+    top: 10vh;
+    left: 10vw;
     width: 30vw;
-    gap: 2em;
+    gap: 2rem;
 }
 
-h1 {
+header h1 {
     position: relative;
     text-align: center;
     animation: float 3s ease-in-out infinite;
 }
 
-h1::after {
+header h1::after {
     position: absolute;
     bottom: -1vh;
     left: 11vw;
     content: '';
     width: 8vw;
     height: 1vh;
-    border-radius: 1rem;
+    border-radius: 16px;
     background: linear-gradient(90deg, #4a73e8, transparent);
     animation: shimmer 3s ease-in-out infinite;
 }
 
-h1,
-p {
-    cursor: default;
-}
-
-h1,
-div,
-p,
-#btn {
-    user-select: none;
+input:is([type="text"], [type="email"], [type="password"]) {
+    border: 1px solid #4a73e8;
+    border-radius: 16px;
+    color: #4a73e8;
 }
 
 input[type="password"] {
     position: relative;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-    border: 0.0625em solid #4a73e8;
-    border-radius: 1rem;
-    color: #4a73e8;
-}
-
-input[type="email"]:focus,
-input[type="password"]:focus {
+input:is([type="text"], [type="email"], [type="password"]):focus {
     color: #4a73e8;
 }
 
@@ -69,6 +57,7 @@ input[type="password"]:focus {
     right: 2.5vw;
     display: none;
     background-color: white;
+    border: none;
     color: #4a73e8;
     cursor: pointer;
 }
@@ -77,27 +66,32 @@ input[type="password"]:focus {
     transform: scale(1.1);
 }
 
-p a {
+p {
+    margin: 0;
+}
+
+a {
     position: relative;
     color: #4a73e8;
     font-weight: 900;
     text-decoration: none;
 }
 
-p a::after {
+a::after {
     position: absolute;
     bottom: -0.5vh;
     left: 0;
     content: '';
     width: 100%;
     height: 0.5vh;
+    border-radius: 16px;
     background: linear-gradient(90deg, #4a73e8, transparent);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease-in-out;
 }
 
-p a:hover::after {
+a:hover::after {
     transform: scaleX(1);
 }
 
@@ -106,14 +100,13 @@ p a:hover::after {
     height: 10vh;
     margin-bottom: 10vh;
     border: none;
-    border-radius: 1rem;
+    border-radius: 16px;
     background-color: #4a73e8;
     color: white;
     font-size: 1.25rem;
     font-weight: 900;
     overflow: hidden;
     transition: all 0.3s ease-in-out;
-    will-change: transform;
 }
 
 #btn::before {
@@ -135,6 +128,20 @@ p a:hover::after {
     left: 100%;
 }
 
+body>h1 {
+    position: fixed;
+    top: 45%;
+    right: 10%;
+    color: white;
+    font-size: 5rem;
+    font-weight: 900;
+    text-shadow:
+        0 -10rem 0 rgba(255, 255, 255, 0.25),
+        0 -5rem 0 rgba(255, 255, 255, 0.5),
+        0 5rem 0 rgba(255, 255, 255, 0.5),
+        0 10rem 0 rgba(255, 255, 255, 0.25);
+}
+
 @keyframes float {
 
     0%,
@@ -143,7 +150,7 @@ p a:hover::after {
     }
 
     50% {
-        transform: translateY(-0.625rem);
+        transform: translateY(-1vh);
     }
 }
 
