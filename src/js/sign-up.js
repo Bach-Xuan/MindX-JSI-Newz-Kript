@@ -42,7 +42,7 @@ function signUp() {
             document.getElementById('signUp').classList.add('was-validated');
             return;
         }
-        const email = document.getElementById('email').value.trim(),
+        const email = document.getElementById('email').value,
             password = document.getElementById('pwd1').value;
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {

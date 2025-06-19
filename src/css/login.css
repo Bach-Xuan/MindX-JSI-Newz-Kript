@@ -127,7 +127,7 @@ a:hover::after {
 }
 
 img {
-    height: 5vh;
+    height: 2rem;
 }
 
 body>h1 {
@@ -165,6 +165,6 @@ body>h1 {
 
     50% {
         opacity: 1;
-        transform: scale(1.2);
+        transform: scale(1.25);
     }
 }
