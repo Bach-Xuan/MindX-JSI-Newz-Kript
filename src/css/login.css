@@ -88,14 +88,14 @@ a::after {
     background: linear-gradient(90deg, #4a73e8, transparent);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-out;
 }
 
 a:hover::after {
     transform: scaleX(1);
 }
 
-#btn {
+#submit {
     width: 8vw;
     height: 8vh;
     border: none;
@@ -104,22 +104,22 @@ a:hover::after {
     color: white;
     font-weight: 900;
     overflow: hidden;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in;
 }
 
-#btn:hover {
+#submit:hover {
     transform: translateY(-1vh);
 }
 
-#btn:hover::before {
+#submit:hover::before {
     left: 100%;
 }
 
 #google {
-    margin: 0 0 10vh 0.1vw;
+    margin-bottom: 10vh;
     border: none;
     background-color: transparent;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-out;
 }
 
 #google:hover {
@@ -127,7 +127,6 @@ a:hover::after {
 }
 
 img {
-    width: 5vw;
     height: 5vh;
 }
 
@@ -166,6 +165,6 @@ body>h1 {
 
     50% {
         opacity: 1;
-        transform: scale(1.25);
+        transform: scale(1.2);
     }
 }

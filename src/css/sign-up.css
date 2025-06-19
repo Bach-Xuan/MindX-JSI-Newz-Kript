@@ -88,14 +88,14 @@ a::after {
     background: linear-gradient(90deg, #4a73e8, transparent);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-out;
 }
 
 a:hover::after {
     transform: scaleX(1);
 }
 
-#btn {
+#submit {
     width: 12vw;
     height: 8vh;
     margin-bottom: 10vh;
@@ -105,10 +105,10 @@ a:hover::after {
     color: white;
     font-weight: 900;
     overflow: hidden;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in;
 }
 
-#btn:hover {
+#submit:hover {
     transform: translateY(-1vh);
 }
 
