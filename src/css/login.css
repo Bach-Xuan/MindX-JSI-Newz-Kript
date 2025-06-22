@@ -2,12 +2,18 @@ html {
     font-size: 80%;
 }
 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+}
+
 body::after {
     position: fixed;
     inset: 0;
     z-index: -1;
     content: '';
-    background: url('../img/bg.avif') center/cover;
+    background: image-set(url('../assets/img/bg.avif'),
+            url('../assets/img/bg.webp')) center/cover;
 }
 
 form {
@@ -37,7 +43,7 @@ header h1::after {
     animation: shimmer 3s ease-in-out infinite;
 }
 
-input:is([type="email"], [type="password"]) {
+input:is([type="text"], [type="email"], [type="password"]) {
     border: 1px solid #4a73e8;
     border-radius: 16px;
     color: #4a73e8;
@@ -47,7 +53,7 @@ input[type="password"] {
     position: relative;
 }
 
-input:is([type="email"], [type="password"]):focus {
+input:is([type="text"], [type="email"], [type="password"]):focus {
     color: #4a73e8;
 }
 
@@ -116,13 +122,22 @@ a:hover::after {
 }
 
 #google {
-    margin-bottom: 10vh;
     border: none;
     background-color: transparent;
     transition: transform 0.3s ease-out;
 }
 
 #google:hover {
+    transform: scale(1.1);
+}
+
+#github {
+    border: none;
+    background-color: transparent;
+    transition: transform 0.3s ease-out;
+}
+
+#github:hover {
     transform: scale(1.1);
 }
 

@@ -1,6 +1,7 @@
 import { auth } from './firebase-config.js';
 import {
     signOut,
+    onAuthStateChanged,
     updateProfile,
     updateEmail,
     updatePassword
@@ -8,14 +9,28 @@ import {
 
 
 function logOut() {
-    document.getElementById('logOut').addEventListener('click', () => {
+    document.getElementById('signOut').addEventListener('click', () => {
         signOut(auth).then(() => {
             alert('You have successfully signed out.');
             window.location.href = 'login.html';
         }).catch((error) => {
-            alert("An error occurred while signing out. Please try again!");
+            alert("Oops, something went wrong. Please try again!");
             console.error(error.code);
         });
+    });
+}
+
+function showUserInfo() {
+    onAuthStateChanged(auth, user => {
+        if (user) {
+            document.getElementById("uid").textContent = `UID: ${user.uid}`;
+            document.getElementById("username").textContent = `Username: ${user.displayName}`;
+            document.getElementById("email").textContent = `Email: ${user.email}`;
+        } else {
+            document.getElementById("username").textContent = "Username: N/A";
+            document.getElementById("email").textContent = "Email: N/A";
+            document.getElementById("uid").textContent = "UID: N/A";
+        }
     });
 }
 
@@ -53,15 +68,33 @@ function togglePasswordVisibility() {
 function update() {
     document.getElementById('update').addEventListener('submit', (e) => {
         e.preventDefault();
-        const email = document.getElementById('email').value.trim(),
-            password = document.getElementById('pwd1').value;
-        
-
+        if (!document.getElementById('update').checkValidity()) {
+            document.getElementById('update').classList.add('was-validated');
+            return;
+        }
+        const username = document.getElementById('username').value,
+            email = document.getElementById('email').value,
+            pwd = document.getElementById('pwd1').value;
+        updateProfile(auth.currentUser, { displayName: username })
+            .then(() => {
+                return updateEmail(auth.currentUser, email);
+            })
+            .then(() => {
+                return updatePassword(auth.currentUser, pwd);
+            })
+            .then(() => {
+                alert('Updated successfully!');
+                window.location.href = 'login.html';
+            }).catch((error) => {
+                alert('Oops, something went wrong. Please try again!');
+                console.error(error.code);
+            });
     });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     logOut();
+    showUserInfo();
     initBootstrapValidation();
     togglePasswordVisibility();
     update();

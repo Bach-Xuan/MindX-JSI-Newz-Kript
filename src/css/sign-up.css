@@ -2,12 +2,18 @@ html {
     font-size: 80%;
 }
 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+}
+
 body::after {
     position: fixed;
     inset: 0;
     z-index: -1;
     content: '';
-    background: url('../img/bg.avif') center/cover;
+    background: image-set(url('../assets/img/bg.avif'),
+            url('../assets/img/bg.webp')) center/cover;
 }
 
 form {

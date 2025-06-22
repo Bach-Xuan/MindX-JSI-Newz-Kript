@@ -2,7 +2,8 @@ import { auth } from './firebase-config.js';
 import {
     signInWithEmailAndPassword,
     signInWithPopup,
-    GoogleAuthProvider
+    GoogleAuthProvider,
+    GithubAuthProvider
 } from 'https://www.gstatic.com/firebasejs/11.8.0/firebase-auth.js';
 
 function initBootstrapValidation(s = '.needs-validation', f = '.form-control') {
@@ -59,8 +60,8 @@ function continueWithGoogle() {
     document.getElementById('google').addEventListener('click', () => {
         signInWithPopup(auth, new GoogleAuthProvider())
             .then((result) => {
-                const isNewUser = result._tokenResponse?.isNewUser || false;
-                const msg = isNewUser
+                const isNew = result._tokenResponse?.isNew || false;
+                const msg = isNew
                     ? `Welcome to Newz Kript, ${result.user.displayName}!`
                     : `Welcome back, ${result.user.displayName}!`;
                 if (document.hasFocus()) {
@@ -73,8 +74,41 @@ function continueWithGoogle() {
                     }, { once: true });
                 }
             }).catch((error) => {
+                if (error.code === 'auth/popup-closed-by-user') return;
                 if (error.code === 'auth/popup-blocked') {
-                    alert('Popup blocked! Please allow popups for this webpage and try again.');
+                    alert('Popup blocked! Please allow popups for this page and try again.');
+                } else {
+                    alert(error.code === 'auth/account-exists-with-different-credential'
+                        ? `${error.customData.email} has already been used to sign up with a password. Please login!`
+                        : `Oops, something went wrong. Please try again later!
+                        ${error.code}`);
+                }
+                console.error(error.code);
+            });
+    })
+}
+
+function continueWithGithub() {
+    document.getElementById('github').addEventListener('click', () => {
+        signInWithPopup(auth, new GithubAuthProvider())
+            .then((result) => {
+                const isNew = result._tokenResponse?.isNew || false;
+                const msg = isNew
+                    ? `Welcome to Newz Kript, ${result.user.displayName}!`
+                    : `Welcome back, ${result.user.displayName}!`;
+                if (document.hasFocus()) {
+                    alert(msg);
+                    window.location.href = 'index.html';
+                } else {
+                    window.addEventListener('focus', () => {
+                        alert(msg);
+                        window.location.href = 'index.html';
+                    }, { once: true });
+                }
+            }).catch((error) => {
+                if (error.code === 'auth/popup-closed-by-user') return;
+                if (error.code === 'auth/popup-blocked') {
+                    alert('Popup blocked! Please allow popups for this page and try again.');
                 } else {
                     alert(error.code === 'auth/account-exists-with-different-credential'
                         ? `${error.customData.email} has already been used to sign up with a password. Please login!`
@@ -91,4 +125,5 @@ document.addEventListener('DOMContentLoaded', () => {
     togglePasswordVisibility();
     login();
     continueWithGoogle();
+    continueWithGithub();
 });
