@@ -44,7 +44,7 @@ function login() {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 alert(`Welcome back, ${userCredential.user.displayName}!`);
-                window.location.href = 'index.html';
+                window.location.href = '../../index.html';
             })
             .catch((error) => {
                 alert(error.code === 'auth/invalid-credential'
@@ -66,11 +66,11 @@ function continueWithGoogle() {
                     : `Welcome back, ${result.user.displayName}!`;
                 if (document.hasFocus()) {
                     alert(msg);
-                    window.location.href = 'index.html';
+                    window.location.href = '../../index.html';
                 } else {
                     window.addEventListener('focus', () => {
                         alert(msg);
-                        window.location.href = 'index.html';
+                        window.location.href = '../../index.html';
                     }, { once: true });
                 }
             }).catch((error) => {
@@ -98,11 +98,11 @@ function continueWithGithub() {
                     : `Welcome back, ${result.user.displayName}!`;
                 if (document.hasFocus()) {
                     alert(msg);
-                    window.location.href = 'index.html';
+                    window.location.href = '../../index.html';
                 } else {
                     window.addEventListener('focus', () => {
                         alert(msg);
-                        window.location.href = 'index.html';
+                        window.location.href = '../../index.html';
                     }, { once: true });
                 }
             }).catch((error) => {

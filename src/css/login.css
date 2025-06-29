@@ -16,6 +16,26 @@ body::after {
             url('../assets/img/bg.webp')) center/cover;
 }
 
+main>a {
+    position: fixed;
+    top: 10vh;
+    left: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border: 3px solid #4a73e8;
+    border-radius: 16px;
+    color: #4a73e8;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+main>a:hover {
+    transform: scale(1.1);
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -76,14 +96,14 @@ p {
     margin: 0;
 }
 
-a {
+p a {
     position: relative;
     color: #4a73e8;
     font-weight: 900;
     text-decoration: none;
 }
 
-a::after {
+p a::after {
     position: absolute;
     bottom: -0.5vh;
     left: 0;
@@ -97,7 +117,7 @@ a::after {
     transition: transform 0.3s ease-out;
 }
 
-a:hover::after {
+p a:hover::after {
     transform: scaleX(1);
 }
 

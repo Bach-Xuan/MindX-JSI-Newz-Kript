@@ -472,3 +472,52 @@ footer a {
         background-position: 100% 50%;
     }
 }
+
+/* Favorite button base */
+.fav-btn {
+    --btn-bg: #fff;
+    --btn-fg: #007bff;
+    --btn-border: #007bff;
+    border: 2px solid var(--btn-border);
+    color: var(--btn-fg);
+    background: var(--btn-bg);
+    transition: background .2s, color .2s;
+}
+
+.fav-btn i {
+    margin-right: .5em;
+    transition: transform .2s;
+}
+
+.fav-btn:hover i {
+    transform: scale(1.1);
+}
+
+/* Active state */
+.fav-btn--active {
+    --btn-bg: #007bff;
+    --btn-fg: #fff;
+    --btn-border: #0056b3;
+}
+
+/* Favorites list items */
+#favoritesSection {
+    max-width: 600px;
+    margin: auto;
+}
+
+#favoritesList .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid #007bff;
+    transition: background .2s;
+}
+
+#favoritesList .list-group-item:hover {
+    background: #f8f9fa;
+}
+
+.remove-btn {
+    font-size: .9em;
+}

@@ -3,18 +3,18 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="robots" content="noindex, nofollow">
+  <meta name="robots" content="noindex">
   <meta name="author" content="Lê Xuân Bách">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search Results</title>
-  <link rel="icon" type="image/x-icon" href="./src/assets/favicon/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
   <link rel="stylesheet" href="./src/css/search.css">
 </head>
 
 <body>
   <header>
     <nav class="nav-main">
-      <a href="index.html" id="brand"><img src="./src/assets/img/logo.jpg">NEWZ KRIPT</a>
+      <a href="../Newz Kript/index.html" id="brand"><img src="../src/assets/img/logo.jpg">NEWZ KRIPT</a>
       <!-- <div id="searchContainer">
           <input type="text" id="searchInput" placeholder="Search...">
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -43,9 +43,12 @@
       <a href="#">ENTERTAINMENT</a>
     </div>
   </nav>
-
   <div class="article-list" id="articleList"></div>
+  <button id="backToTop">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
   <script src="./src/js/navbar-ux.js"></script>
+  <script src="../js/back-to-top.js" defer></script>
   <script>
     // Get query from URL
     function getQueryParam(param) {

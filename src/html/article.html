@@ -5,25 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Newz Kript</title>
-    <link rel="icon" type="image/x-icon" href="./src/assets/favicon/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="./src/css/header.css">
-    <link rel="stylesheet" href="./src/css/main.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/main.css">
 </head>
 
 <body>
-    <!-- BACK TO TOP BUTTON -->
-    <section class="back-to-top-button">
-        <button id="backToTop">
-            <i class="fa-solid fa-arrow-up"></i>
-        </button>
-    </section>
-
     <header>
         <nav class="nav-main">
-            <a href="index.html" id="brand"><img src="./src/assets/img/logo.jpg">NEWZ KRIPT</a>
+            <a href="../index.html" id="brand"><img src="../src/assets/img/logo.jpg">NEWZ KRIPT</a>
             <!-- <div id="searchContainer">
           <input type="text" id="searchInput" placeholder="Search...">
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -36,7 +29,7 @@
                 </div>
             </div>
             <div id="resultsContainer" class="results-container" id="resultsContainer"></div>
-            <button id="login"><i class="fa-regular fa-user"></i></button>
+            <button id="login"><a href="user.html"><i class="fa-regular fa-user"></i></a></button>
         </nav>
     </header>
     <div class="gcse-search"></div>
@@ -82,7 +75,7 @@
         </div>
     </section>
 
-    <main>
+    <main data-article-id="{{id_from_localStorage_or_URL}}">
         <!-- ARTICLE CONTENT -->
         <section class="article-content">
             <h1 id="article-title"></h1>
@@ -94,6 +87,10 @@
             <a id="article-link" href="" target="_blank">Read Full Article</a>
         </section>
     </main>
+    <!-- Favorite button -->
+    <button id="favBtn" class="btn btn-lg fav-btn">
+        <i class="far fa-star"></i> Add to Favorites
+    </button>
 
     <footer>
         <!-- FOOTER -->
@@ -117,7 +114,6 @@
             <a href="#" onclick="event.preventDefault();"><i class="fa-brands fa-linkedin"></i></a>
         </div>
     </footer>
-
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const article = JSON.parse(localStorage.getItem('selectedArticle'));
@@ -203,7 +199,10 @@
     `;
         }
     </script>
-    <script type="module" src="./src/js/main.js"></script>
+    <script type="module" src="../js/firebase-config.js"></script>
+    <script type="module" src="../js/main.js"></script>
+    <script type="module" src="../js/favorite.js"></script>
+    <script src="../js/back-to-top.js" defer></script>
 </body>
 
 </html>

@@ -5,18 +5,19 @@ function handleUser() {
     document.getElementById('login').addEventListener('click', () => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                if (user.email === 'admin1@gmail.com') {
-                    window.location.href = 'admin.html';
-                }
-                else {
-                    window.location.href = 'user.html';
+                if (/index\.html|article/.test(location.pathname)) {
+                    location.href = user.email === 'admin1@gmail.com'
+                        ? './src/html/admin.html'
+                        : './src/html/user.html';
                 }
             } else {
-                window.location.href = 'login.html';
+                location.href = './src/html/login.html';
             }
         });
     });
 }
+
+
 
 async function fetchNewsArticles(query) {
     try {
