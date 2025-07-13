@@ -79,6 +79,10 @@ main {
     transform: translateX(4px);
 }
 
+#publish>h6 {
+    color: black !important;
+}
+
 /* Main Content */
 .main-content {
     flex: 1;
