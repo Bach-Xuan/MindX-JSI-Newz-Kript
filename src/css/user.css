@@ -73,6 +73,16 @@ header h1 {
     background-clip: text;
 }
 
+#home {
+    border: none;
+    background-color: transparent;
+    color: white;
+}
+
+#home:hover {
+    transform: scale(1.1);
+}
+
 #signOut {
     display: block;
     margin: 0 auto;
