@@ -184,8 +184,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background: darken(var(--primary), 10%);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
 }
 
 #btn.btn-danger {
@@ -197,8 +196,7 @@ button[type="submit"]:hover {
 }
 
 #btn.btn-danger:hover {
-    background: darken(var(--accent), 10%);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.1);
 }
 
 /* Non-API Articles Grid */
