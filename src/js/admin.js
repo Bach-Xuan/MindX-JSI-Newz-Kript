@@ -302,13 +302,13 @@ function showEditForm(articleId, articleData) {
                 <input type="hidden" id="edit-article-id" value="${articleId}">
                 
                 <div class="form-group">
-                    <h6>EDIT TITLE</h6>
+                    <h6 style="color: black;">EDIT TITLE</h6>
                     <input type="text" class="form-control" id="edit-title" value="${articleData.title || ''}" required>
                     <div class="invalid-feedback">Please provide a title.</div>
                 </div>
                 
                 <div class="form-group">
-                    <h6>SELECT CATEGORY</h6>
+                    <h6 style="color: black;">SELECT CATEGORY</h6>
                     <select class="form-select" id="edit-category" required>
                         <option value="">Select one category from the menu</option>
                         <option value="world" ${articleData.category === 'world' ? 'selected' : ''}>WORLD</option>
@@ -324,18 +324,18 @@ function showEditForm(articleId, articleData) {
                 </div>
                 
                 <div class="form-group">
-                    <h6>EDIT AUTHOR</h6>
+                    <h6 style="color: black;">EDIT AUTHOR</h6>
                     <input type="text" class="form-control" id="edit-author" value="${articleData.author || ''}" required>
                     <div class="invalid-feedback">Please provide an author name.</div>
                 </div>
                 
                 <div class="form-group">
-                    <h6>EDIT DESCRIPTION</h6>
+                    <h6 style="color: black;">EDIT DESCRIPTION</h6>
                     <textarea class="form-control" id="edit-description" rows="3">${articleData.description || ''}</textarea>
                 </div>
                 
                 <div class="form-group">
-                    <h6>EDIT CONTENT</h6>
+                    <h6 style="color: black;">EDIT CONTENT</h6>
                     <textarea class="form-control" id="edit-content" rows="10">${articleData.content || ''}</textarea>
                 </div>
                 
