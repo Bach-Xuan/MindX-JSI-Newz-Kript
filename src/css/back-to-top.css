@@ -1,0 +1,21 @@
+#backToTop {
+    position: fixed;
+    bottom: 5vh;
+    right: 1vw;
+    z-index: 100;
+    width: 3rem;
+    height: 3rem;
+    border: 3px solid #4a37e8;
+    border-radius: 16px;
+    background-color: white;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+#backToTop.show {
+    opacity: 1;
+}
+
+#backToTop:hover {
+    transform: scale(1.1);
+}

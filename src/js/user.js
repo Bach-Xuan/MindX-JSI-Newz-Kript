@@ -6,7 +6,15 @@ import {
     updateEmail,
     updatePassword
 } from 'https://www.gstatic.com/firebasejs/11.8.0/firebase-auth.js';
+ 
 
+onAuthStateChanged(auth, user => {
+    if (!user) {
+        window.stop();
+        alert('Please login first!');
+        window.location.href = 'login.html';
+    }
+})
 
 function logOut() {
     document.getElementById('signOut').addEventListener('click', () => {
@@ -22,15 +30,9 @@ function logOut() {
 
 function showUserInfo() {
     onAuthStateChanged(auth, user => {
-        if (user) {
             document.getElementById("uid").textContent = `UID: ${user.uid}`;
             document.getElementById("username").textContent = `Username: ${user.displayName}`;
             document.getElementById("email").textContent = `Email: ${user.email}`;
-        } else {
-            document.getElementById("username").textContent = "Username: N/A";
-            document.getElementById("email").textContent = "Email: N/A";
-            document.getElementById("uid").textContent = "UID: N/A";
-        }
     });
 }
 

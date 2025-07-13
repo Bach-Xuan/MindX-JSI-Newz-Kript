@@ -51,7 +51,7 @@ export function publish() {
             // Add the document to the "article" collection
             const docRef = await addDoc(collection(db, 'articles'), article);
             if (confirm('Article published successfully! Go to homepage?')) {
-                window.location.href = 'index.html';
+                window.location.href = '../../index.html';
             }
             else {
                 location.reload();

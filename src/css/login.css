@@ -27,7 +27,6 @@ main>a {
     height: 3rem;
     border: 3px solid #4a73e8;
     border-radius: 16px;
-    color: #4a73e8;
     text-decoration: none;
     transition: transform 0.3s ease;
 }
@@ -84,7 +83,6 @@ input:is([type="text"], [type="email"], [type="password"]):focus {
     display: none;
     background-color: white;
     border: none;
-    color: #4a73e8;
     cursor: pointer;
 }
 
