@@ -1,9 +1,10 @@
+@import 'fonts.css';
+
 html {
     font-size: 80%;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     user-select: none;
 }
 
@@ -14,6 +15,10 @@ body::after {
     content: '';
     background: image-set(url('../assets/img/bg.avif'),
             url('../assets/img/bg.webp')) center/cover;
+}
+
+main {
+    font-family: 'Noto Sans', sans-serif;
 }
 
 main>a {
@@ -47,6 +52,7 @@ form {
 header h1 {
     position: relative;
     text-align: center;
+    font-family: 'Noto Serif', serif;
     animation: float 3s ease-in-out infinite;
 }
 
@@ -97,6 +103,7 @@ p {
 p a {
     position: relative;
     color: #4a73e8;
+    font-family: 'Noto Serif', serif;
     font-weight: 900;
     text-decoration: none;
 }
@@ -141,6 +148,7 @@ body>h1 {
     top: 45%;
     right: 10%;
     color: white;
+    font-family: 'Noto Serif', serif;
     font-size: 5rem;
     font-weight: 900;
     text-shadow:
