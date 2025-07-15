@@ -26,9 +26,8 @@ function togglePasswordVisibility() {
     });
     document.getElementById('eye').addEventListener('click', () => {
         document.getElementById('pwd').type = document.getElementById('pwd').type === 'password' ? 'text' : 'password';
-        eye.innerHTML = document.getElementById('pwd').type === 'text'
-            ? `<i class="fa-regular fa-eye${pwd.type === 'text' ? '-slash' : ''} fa-bounce" style="color: #4a73e8;"></i>`
-            : `<i class="fa-regular fa-eye${pwd.type === 'text' ? '-slash' : ''} fa-bounce" style="color: #4a73e8;"></i>`;
+        eye.innerHTML = document.getElementById('pwd').innerHTML =
+            `<img src="../assets/svg/eye${pwd.type === 'text' ? '-slash' : ''}.svg">`;
     });
 }
 

@@ -38,6 +38,10 @@ main>a:hover {
     transform: scale(1.1);
 }
 
+img {
+    height: 1rem;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -88,6 +92,7 @@ input:is([type="text"], [type="email"], [type="password"]):focus {
     background-color: white;
     border: none;
     cursor: pointer;
+    animation: bounce 1.6s ease-in-out infinite;
 }
 
 #eye:hover {
@@ -101,7 +106,7 @@ p {
 p a {
     position: relative;
     color: #4a73e8;
-    font-family: 'Noto Serif', serif;
+    font-family: 'Noto Sans', sans-serif;
     font-weight: 900;
     text-decoration: none;
 }
@@ -164,8 +169,8 @@ p a:hover::after {
     transform: scale(1.1);
 }
 
-img {
-    height: 2rem;
+button>img {
+    height: 3rem;
 }
 
 body>h1 {
@@ -205,5 +210,31 @@ body>h1 {
     50% {
         opacity: 1;
         transform: scale(1.25);
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+
+    10% {
+        transform: translateY(-40%) scaleY(1.1);
+    }
+
+    30% {
+        transform: translateY(0) scaleY(0.95);
+    }
+
+    50% {
+        transform: translateY(-20%) scaleY(1.05);
+    }
+
+    80% {
+        transform: translateY(0) scaleY(0.98);
+    }
+
+    100% {
+        transform: translateY(0) scaleY(1);
     }
 }
