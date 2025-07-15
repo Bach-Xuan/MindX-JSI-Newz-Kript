@@ -1,6 +1,5 @@
-/*-----------------------------------------
-  Lighter Theme & Fixed Section Display
-------------------------------------------*/
+@import 'fonts.css';
+
 :root {
     --primary: #4a37e8;
     /* lighter blue */
@@ -27,7 +26,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+    font-family: 'Noto Sans', sans-serif;
     background: var(--bg);
     color: var(--text);
 }

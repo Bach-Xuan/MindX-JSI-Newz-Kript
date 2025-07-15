@@ -1,3 +1,5 @@
+@import 'fonts.css';
+
 * {
     margin: 0;
     padding: 0;
@@ -27,7 +29,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
     color: var(--text-primary);
     background: linear-gradient(135deg, #f8f9ff 0%, #e8f0fe 50%, #f1f5f9 100%);
     min-height: 100vh;
