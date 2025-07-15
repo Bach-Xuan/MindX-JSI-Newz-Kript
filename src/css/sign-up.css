@@ -1,5 +1,3 @@
-@import 'fonts.css';
-
 html {
     font-size: 80%;
 }
@@ -38,6 +36,10 @@ main>a {
 
 main>a:hover {
     transform: scale(1.1);
+}
+
+img {
+    height: 1em;
 }
 
 form {
@@ -82,6 +84,10 @@ input:is([type="text"], [type="email"], [type="password"]):focus {
     color: #4a73e8;
 }
 
+.invalid-feedback {
+    font-family: 'Noto Serif', serif;
+}
+
 .eye {
     position: absolute;
     top: 2.25vh;
@@ -90,6 +96,7 @@ input:is([type="text"], [type="email"], [type="password"]):focus {
     background-color: white;
     border: none;
     cursor: pointer;
+    animation: bounce 1.6s ease-in-out infinite;
 }
 
 .eye:hover {
@@ -103,7 +110,6 @@ p {
 p a {
     position: relative;
     color: #4a73e8;
-    font-family: 'Noto Serif', serif;
     font-weight: 900;
     text-decoration: none;
 }
@@ -180,5 +186,31 @@ body>h1 {
     50% {
         opacity: 1;
         transform: scale(1.5);
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+
+    10% {
+        transform: translateY(-40%) scaleY(1.1);
+    }
+
+    30% {
+        transform: translateY(0) scaleY(0.95);
+    }
+
+    50% {
+        transform: translateY(-20%) scaleY(1.05);
+    }
+
+    80% {
+        transform: translateY(0) scaleY(0.98);
+    }
+
+    100% {
+        transform: translateY(0) scaleY(1);
     }
 }

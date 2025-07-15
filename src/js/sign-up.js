@@ -30,7 +30,7 @@ function togglePasswordVisibility() {
         pwd.parentNode.querySelector('.eye').onclick = () => {
             pwd.type = pwd.type === 'password' ? 'text' : 'password';
             pwd.parentNode.querySelector('.eye').innerHTML =
-                `<i class="fa-regular fa-eye${pwd.type === 'text' ? '-slash' : ''}  fa-bounce" style="color: #4a73e8;"></i>`;
+                `<img src="../assets/svg/eye${pwd.type === 'text' ? '-slash' : ''}.svg">`;
         };
     });
 }
