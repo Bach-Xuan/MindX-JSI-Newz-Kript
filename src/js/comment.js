@@ -167,12 +167,12 @@ function loadReplies(parentId, container) {
         container.innerHTML = '';
         snap.forEach(docSnap => {
             const rd = docSnap.data();
-            container.appendChild(renderReply(rd));
+            container.appendChild(renderReply(docSnap.id, rd));
         });
     }, console.error);
 }
 
-function renderReply(data) {
+function renderReply(id, data) {
     const li = document.createElement('li');
     li.className = 'reply-item';
     const dateStr = formatDate(data.createdAt);
@@ -183,7 +183,24 @@ function renderReply(data) {
       <span class="reply-date">${dateStr}</span>
     </div>
     <div class="reply-content">${escapeHtml(data.content)}</div>
+    <div class="comment-actions">
+      <button class="reply-button" ${!currentUser ? 'disabled' : ''}>
+        <i class="fas fa-reply"></i> Reply
+      </button>
+    </div>
+    <ul class="replies-list" data-parent="${id}"></ul>
   `;
+
+    // Load nested replies for this reply
+    const repliesList = li.querySelector('.replies-list');
+    loadReplies(id, repliesList);
+
+    // Add reply functionality to this reply
+    const btn = li.querySelector('.reply-button');
+    if (btn && currentUser) {
+        btn.addEventListener('click', () => toggleReplyForm(li, id));
+    }
+
     return li;
 }
 

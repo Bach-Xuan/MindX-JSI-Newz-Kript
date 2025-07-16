@@ -20,17 +20,12 @@ onAuthStateChanged(auth, (user) => {
   }
 
   const uid = user.uid;
-  console.log('[DEBUG] User authenticated:', uid);
 
   // ARTICLE PAGE MODE - Handle individual article favorite functionality
   const favBtn = document.getElementById('favBtn');
   if (favBtn) {
-    console.log('[DEBUG] Found favorite button, initializing article page mode');
-
     // Get article ID from URL parameters or generate from article data
     const articleId = getArticleId();
-    console.log('[DEBUG] Article ID:', articleId);
-
     if (articleId) {
       const favRef = doc(db, 'users', uid, 'favorites', articleId);
 
@@ -50,8 +45,6 @@ onAuthStateChanged(auth, (user) => {
         // Trigger animation
         favBtn.classList.add('toggle-effect');
         setTimeout(() => favBtn.classList.remove('toggle-effect'), 600);
-
-        console.log('[DEBUG] Favorite state set to:', isFav);
       }
 
       // Initialize favorite state on page load

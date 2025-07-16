@@ -12,7 +12,7 @@ body::after {
     z-index: -1;
     content: '';
     background: image-set(url('../assets/img/bg.avif'),
-            url('../assets/img/bg.webp')), url('../assets/img/bg.jpg') center/cover;
+            url('../assets/img/bg.webp'), url('../assets/img/bg.jpg')) center/cover;
 }
 
 main {
