@@ -37,3 +37,23 @@
     font-style: italic;
     font-display: swap;
 }
+
+@font-face {
+    font-family: 'Noto Serif Display';
+    src: url('../assets/fonts/NotoSerifDisplay.woff2') format('woff2'),
+        url('../assets/fonts/NotoSerifDisplay.woff') format('woff'),
+        url('../assets/fonts/NotoSerifDisplay.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Serif Display';
+    src: url('../assets/fonts/NotoSerifDisplay-Italic.woff2') format('woff2'),
+        url('../assets/fonts/NotoSerifDisplay-Italic.woff') format('woff'),
+        url('../assets/fonts/NotoSerifDisplay-Italic.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}

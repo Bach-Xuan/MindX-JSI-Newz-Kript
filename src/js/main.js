@@ -63,8 +63,8 @@ function renderTopStories(results) {
         el.innerHTML = `
       <img src="${article.image_url || './image/800x400.png'}" loading="lazy">
       <div class="top-story-content">
-        <h3>${article.title}</h3>
-        <p>${article.description}</p>
+        <h3 style="font-family: 'Noto Serif Display', serif;">${article.title}</h3>
+        <p style="font-family: 'Noto Serif', serif;">${article.description}</p>
       </div>`;
         el.onclick = () => selectAndGo(article);
         container.appendChild(el);
@@ -80,7 +80,8 @@ function renderLatestNews(results) {
         item.className = "latest-news-item";
         item.innerHTML = `
       <img src="${article.image_url || './image/150x100.png'}" loading="lazy">
-      <div><h4>${article.title}</h4><p>${article.description}</p></div>`;
+      <div><h4 style="font-family: 'Noto Serif Display', serif;">${article.title}</h4>
+      <p style="font-family: 'Noto Serif', serif;">${article.description}</p></div>`;
         item.onclick = () => selectAndGo(article);
         container.appendChild(item);
     });
@@ -95,8 +96,8 @@ function renderCategories(results) {
         cat.className = "category-item";
         cat.innerHTML = `
       <img src="${article.image_url || './image/400x200.png'}" loading="lazy">
-      <h4>${article.category}</h4>
-      <p>${article.description}</p>`;
+      <h4 style="font-family: 'Noto Serif Display', serif;">${article.category}</h4>
+      <p style="font-family: 'Noto Serif', serif;">${article.description}</p>`;
         cat.onclick = () => selectAndGo(article);
         container.appendChild(cat);
     });
@@ -158,12 +159,9 @@ function displayFirestoreArticles(articles) {
         el.className = "non-api";
         el.innerHTML = `
       <div class="non-api-content">
-        <h3>${article.title}</h3>
-        <p class="non-api-description">${article.description}</p>
+        <h3 style="font-family: 'Noto Serif Display', serif;">${article.title}</h3>
+        <p class="non-api-description" style="font-family: 'Noto Serif', serif;">${article.description}</p>
         <div class="non-api-preview">${article.content.slice(0, 150)}…</div>
-        <div class="non-api-actions">
-          <button class="read-more-btn">Read More</button>
-        </div>
       </div>`;
         el.onclick = () => selectAndGo(article);
         container.appendChild(el);
