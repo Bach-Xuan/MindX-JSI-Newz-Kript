@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/favorite.css">
 </head>
- 
+
 <body>
     <main>
         <header>
@@ -26,8 +26,8 @@
             <h2>YOUR PROFILE</h2>
             <div class="list">
                 <div id="uid"></div>
-                <div id="username"></div>
-                <div id="email"></div>
+                <div id="displayUsername"></div>
+                <div id="displayEmail"></div>
             </div>
         </section>
         <section id="editInfo">
@@ -52,17 +52,17 @@
                     </div>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="pwd1" placeholder="" pattern="^(?=.*\d)[^\s]{8,32}$"
-                        required>
-                    <label>NEW PASSWORD</label>
+                    <input type="password" class="form-control" id="pwd1" placeholder=""
+                        pattern="^(?=.*\d)[^\s]{8,32}$">
+                    <label>NEW PASSWORD (Optional)</label>
                     <button type="button" class="eye"><i class="fa-regular fa-eye fa-lg"></i></button>
                     <div class="invalid-feedback">
                         Must be 8-32 non-whitespace characters; at least one number required.
                     </div>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="pwd2" placeholder="" pattern="^\S+$" required>
-                    <label>CONFIRM PASSWORD</label>
+                    <input type="password" class="form-control" id="pwd2" placeholder="" pattern="^\S+$">
+                    <label>CONFIRM PASSWORD (Optional)</label>
                     <button type="button" class="eye"><i class="fa-regular fa-eye fa-lg"></i></button>
                     <div class="invalid-feedback">
                         Must match with your new password.
