@@ -210,7 +210,7 @@ function update() {
 // Add home button functionality
 function setupHomeButton() {
     document.getElementById('home').addEventListener('click', () => {
-        window.location.href = 'index.html'; // Adjust path as needed
+        window.location.href = '../../index.html'; // Adjust path as needed
     });
 }
 
