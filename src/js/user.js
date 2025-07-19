@@ -9,14 +9,6 @@ import {
     EmailAuthProvider
 } from 'https://www.gstatic.com/firebasejs/11.8.0/firebase-auth.js';
 
-onAuthStateChanged(auth, user => {
-    if (!user) {
-        window.stop();
-        alert('Please login first!');
-        window.location.href = 'login.html';
-    }
-})
-
 function logOut() {
     document.getElementById('signOut').addEventListener('click', () => {
         signOut(auth).then(() => {
