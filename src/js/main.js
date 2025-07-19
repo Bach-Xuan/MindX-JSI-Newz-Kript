@@ -21,7 +21,7 @@ async function init() {
 
 // ─── 1) Fetch & Render External News API ──────────────────────────────────────
 async function fetchNewsData() {
-    const apiUrl = "https://newsdata.io/api/1/latest?apikey=pub_6851165a998287bd633cd273478508dd9fdfe&image=1&language=en";
+    const apiUrl = "https://newsdata.io/api/1/latest?apikey=pub_6851165a998287bd633cd273478508dd9fdfe&image=1&language=en&removeduplicate=1&excludecategory=crime,domestic,top,tourism,other";
 
     try {
         const res = await fetch(apiUrl);
