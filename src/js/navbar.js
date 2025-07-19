@@ -1,29 +1,44 @@
+/* navbar.js */
 import { auth } from './firebase-config.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.8.0/firebase-auth.js';
 
 function handleUser() {
-    document.getElementById('login').addEventListener('click', () => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                if (/index\.html|article/.test(location.pathname)) {
-                    location.href = user.email === 'admin1@gmail.com'
+    const loginBtn = document.getElementById('login');
+    if (loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    const targetPage = user.email === 'admin1@gmail.com'
                         ? './src/html/admin.html'
                         : './src/html/user.html';
+                    window.location.href = targetPage;
+                } else {
+                    window.location.href = './src/html/login.html';
                 }
-            } else {
-                location.href = './src/html/login.html';
-            }
+            });
         });
-    });
+    }
 }
 
+// Shared helper functions
+async function fetchNewsArticles(query = '') {
+    const baseUrl = 'https://newsdata.io/api/1/latest';
+    const params = new URLSearchParams({
+        apikey: 'pub_6851165a998287bd633cd273478508dd9fdfe',
+        image: '1',
+        language: 'en',
+        removeduplicate: '1'
+    });
 
+    if (query) {
+        params.set('q', query);
+    }
 
-async function fetchNewsArticles(query) {
     try {
-        const url = `https://newsdata.io/api/1/latest?apikey=pub_6851165a998287bd633cd273478508dd9fdfe&image=1&language=en&q=${encodeURIComponent(query)}`;
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Network response was not ok');
+        const response = await fetch(`${baseUrl}?${params}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         return data.results || [];
     } catch (error) {
@@ -32,137 +47,332 @@ async function fetchNewsArticles(query) {
     }
 }
 
-function renderArticles(articles) {
-    const articleList = document.getElementById('articleList');
-    if (!articleList) return;
+function calculateLevenshteinDistance(str1, str2) {
+    const len1 = str1.length;
+    const len2 = str2.length;
 
-    if (articles.length === 0) {
-        articleList.innerHTML = '<div class="no-results">No results found</div>';
-        return;
+    if (len1 === 0) return len2;
+    if (len2 === 0) return len1;
+
+    let previousRow = Array(len2 + 1).fill(0);
+    let currentRow = Array(len2 + 1).fill(0);
+
+    // Initialize first row
+    for (let j = 0; j <= len2; j++) {
+        previousRow[j] = j;
     }
 
-    const uniqueArticles = [];
-    const titles = new Set();
+    for (let i = 1; i <= len1; i++) {
+        currentRow[0] = i;
 
-    articles.forEach(article => {
-        if (!titles.has(article.title)) {
-            titles.add(article.title);
-            uniqueArticles.push(article);
+        for (let j = 1; j <= len2; j++) {
+            const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
+            currentRow[j] = Math.min(
+                previousRow[j] + 1,     // deletion
+                currentRow[j - 1] + 1,  // insertion
+                previousRow[j - 1] + cost // substitution
+            );
         }
-    });
 
-    articleList.innerHTML = uniqueArticles.map((article, index) => {
-        const description = article.description || 'No description available';
-        const truncatedDescription = description.length > 100 ? description.substring(0, 100) + '...' : description;
+        // Swap rows
+        [previousRow, currentRow] = [currentRow, previousRow];
+    }
 
-        return `
-              <li class="article-item">
-                  <a href="article.html" onclick="saveArticleToLocalStorage(${index})">
-                      <img src="${article.image_url || 'default-image.jpg'}" alt="${article.title}">
-                      <div class="article-content">
-                          <div class="article-title">${article.title}</div>
-                          <div class="article-description">${truncatedDescription}</div>
-                          <div class="article-meta">By ${article.creator ? article.creator.join(', ') : 'Unknown'} on ${new Date(article.pubDate).toLocaleDateString()}</div>
-                      </div>
-                  </a>
-              </li>
-          `;
-    }).join('');
-
-    // Save all articles to localStorage for reference
-    localStorage.setItem('articles', JSON.stringify(uniqueArticles));
+    return previousRow[len2];
 }
 
-function saveArticleToLocalStorage(index) {
-    const articles = JSON.parse(localStorage.getItem('articles') || '[]');
-    const selectedArticle = articles[index];
-    localStorage.setItem('selectedArticle', JSON.stringify(selectedArticle));
+function getNormalizedDistance(str1, str2) {
+    const distance = calculateLevenshteinDistance(str1.toLowerCase(), str2.toLowerCase());
+    const maxLength = Math.max(str1.length, str2.length) || 1;
+    return 1 - (distance / maxLength);
 }
-// Expose to global scope for HTML onclick usage
-window.saveArticleToLocalStorage = saveArticleToLocalStorage;
 
-function viewArticle(article) {
-    localStorage.setItem('selectedArticle', JSON.stringify(article));
-    window.location.href = 'article.html';
-}
-// Expose to global scope if needed elsewhere
-window.viewArticle = viewArticle;
-
+// Main search execution function
 async function executeSearch() {
     const searchInput = document.getElementById('searchInput');
-    const resultsContainer = document.getElementById('resultsContainer');
+    if (!searchInput) return;
+
     const query = searchInput.value.trim();
-    if (!query) {
-        resultsContainer.style.display = 'none';
-        resultsContainer.innerHTML = "";
-        return;
-    }
-    // Always fetch from API for fresh results
-    const articles = await fetchNewsArticles(query);
-    localStorage.setItem('articles', JSON.stringify(articles));
-    // Also filter allArticles for fallback
-    const allArticles = JSON.parse(localStorage.getItem('allArticles') || '[]');
-    const filtered = allArticles.filter(a =>
-        (a.title && a.title.toLowerCase().includes(query.toLowerCase())) ||
-        (a.description && a.description.toLowerCase().includes(query.toLowerCase())) ||
-        (a.content && a.content.toLowerCase().includes(query.toLowerCase()))
-    );
-    localStorage.setItem('fallbackArticles', JSON.stringify(filtered));
-    window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
-}
+    if (!query) return;
 
-function initializeSearchResultsPage() {
-    if (window.location.pathname.endsWith('search-results.html')) {
-        const articles = JSON.parse(localStorage.getItem('articles') || '[]');
-        renderArticles(articles);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', initializeSearchResultsPage);
-
-function calculateLevenshteinDistance(a, b) {
-    const m = a.length, n = b.length;
-    if (m === 0) return n;
-    if (n === 0) return m;
-    let prev = Array(n + 1).fill(0),
-        curr = Array(n + 1).fill(0);
-
-    for (let j = 0; j <= n; j++) prev[j] = j;
-
-    for (let i = 1; i <= m; i++) {
-        curr[0] = i;
-        for (let j = 1; j <= n; j++) {
-            const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-            curr[j] = Math.min(prev[j] + 1, curr[j - 1] + 1, prev[j - 1] + cost);
+    try {
+        // Show loading state
+        const searchBtn = document.querySelector('.search-btn');
+        if (searchBtn) {
+            searchBtn.style.opacity = '0.5';
         }
-        [prev, curr] = [curr, prev];
+
+        // Fetch fresh results for the query
+        const apiResults = await fetchNewsArticles(query);
+        let searchResults = apiResults;
+
+        // If API returns no results, search in cached articles
+        if (!apiResults.length) {
+            const cachedArticles = JSON.parse(localStorage.getItem('allArticles') || '[]');
+            const queryLower = query.toLowerCase();
+
+            searchResults = cachedArticles.filter(article => {
+                const title = (article.title || '').toLowerCase();
+                const description = (article.description || '').toLowerCase();
+                const content = (article.content || '').toLowerCase();
+
+                return title.includes(queryLower) ||
+                    description.includes(queryLower) ||
+                    content.includes(queryLower);
+            });
+        }
+
+        // Store results for the search page
+        localStorage.setItem('articles', JSON.stringify(searchResults));
+
+        // Determine the correct path to search results
+        const currentPath = window.location.pathname;
+        const isInHtmlFolder = currentPath.includes('/html/') || currentPath.includes('/src/html/');
+
+        const targetUrl = isInHtmlFolder
+            ? `search-results.html?q=${encodeURIComponent(query)}`
+            : `src/html/search-results.html?q=${encodeURIComponent(query)}`;
+
+        window.location.href = targetUrl;
+
+    } catch (error) {
+        console.error('Search execution error:', error);
+        alert('Search failed. Please try again.');
+    } finally {
+        // Reset loading state
+        const searchBtn = document.querySelector('.search-btn');
+        if (searchBtn) {
+            searchBtn.style.opacity = '1';
+        }
     }
-    return prev[n];
 }
 
-function getNormalizedDistance(a, b) {
-    const lowerItem = item.toLowerCase(),
-        lowerQuery = query.toLowerCase();
-    return lowerItem.includes(lowerQuery) || getNormalizedDistance(lowerItem, lowerQuery) < threshold;
-}
+// Make executeSearch available globally
+window.executeSearch = executeSearch;
 
-function setupSearch() {
-    const searchInput = document.getElementById('searchInput');
-    const resultsContainer = document.getElementById('resultsContainer');
+// Navbar live search functionality
+class NavbarSearch {
+    constructor() {
+        this.searchInput = document.getElementById('searchInput');
+        this.resultsContainer = document.getElementById('resultsContainer');
+        this.searchBtn = document.querySelector('.search-btn');
+        this.allArticles = [];
+        this.isLoading = false;
+        this.init();
+    }
 
-    if (searchInput && resultsContainer) {
-        searchInput.addEventListener('blur', () => {
-            if (!searchInput.value.trim()) searchInput.value = "";
-            resultsContainer.style.display = 'none';
+    async init() {
+        await this.loadArticles();
+        this.setupEventListeners();
+    }
+
+    async loadArticles() {
+        if (this.isLoading) return;
+        this.isLoading = true;
+
+        try {
+            // Check if we have cached articles
+            const cachedArticles = localStorage.getItem('allArticles');
+            if (cachedArticles) {
+                this.allArticles = JSON.parse(cachedArticles);
+                this.isLoading = false;
+                return;
+            }
+
+            // Fetch fresh articles if no cache
+            const apiArticles = await fetchNewsArticles();
+            this.allArticles = apiArticles;
+
+            // Cache the results
+            if (apiArticles.length > 0) {
+                localStorage.setItem('allArticles', JSON.stringify(apiArticles));
+            }
+        } catch (error) {
+            console.error('Error loading articles for navbar search:', error);
+            this.allArticles = [];
+        } finally {
+            this.isLoading = false;
+        }
+    }
+
+    setupEventListeners() {
+        if (this.searchInput) {
+            // Live search on input
+            this.searchInput.addEventListener('input', this.debounce(e => {
+                this.showLiveResults(e.target.value);
+            }, 200));
+
+            // Execute search on Enter
+            this.searchInput.addEventListener('keypress', e => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    executeSearch();
+                }
+            });
+
+            // Show results on focus if there's a query
+            this.searchInput.addEventListener('focus', () => {
+                const query = this.searchInput.value.trim();
+                if (query) {
+                    this.showLiveResults(query);
+                }
+            });
+
+            // Hide results when clicking outside
+            document.addEventListener('click', e => {
+                if (!e.target.closest('#searchContainer')) {
+                    this.hideResults();
+                }
+            });
+        }
+
+        // Search button click
+        if (this.searchBtn) {
+            this.searchBtn.addEventListener('click', executeSearch);
+        }
+
+        // Search icon click (alternative)
+        const searchIcon = document.querySelector('.fa-magnifying-glass');
+        if (searchIcon) {
+            searchIcon.addEventListener('click', executeSearch);
+        }
+
+        // Handle user authentication
+        handleUser();
+    }
+
+    showLiveResults(query) {
+        const trimmedQuery = query.trim().toLowerCase();
+        if (!trimmedQuery) {
+            this.hideResults();
+            return;
+        }
+
+        // Score and filter articles based on similarity
+        const scoredArticles = this.allArticles.map(article => {
+            const title = (article.title || '').toLowerCase();
+            const description = (article.description || '').toLowerCase();
+
+            // Calculate similarity scores
+            const titleScore = getNormalizedDistance(title, trimmedQuery);
+            const descScore = getNormalizedDistance(description, trimmedQuery);
+            const maxScore = Math.max(titleScore, descScore);
+
+            // Also check for direct substring matches (higher priority)
+            const titleMatch = title.includes(trimmedQuery) ? 0.9 : 0;
+            const descMatch = description.includes(trimmedQuery) ? 0.7 : 0;
+            const directMatch = Math.max(titleMatch, descMatch);
+
+            const finalScore = Math.max(maxScore, directMatch);
+
+            return { article, score: finalScore };
         });
 
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') executeSearch();
-        });
+        // Filter and sort by relevance
+        const relevantArticles = scoredArticles
+            .filter(item => item.score > 0.3)
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 5)
+            .map(item => item.article);
+
+        this.displayLiveResults(relevantArticles, query);
+    }
+
+    displayLiveResults(articles, query) {
+        if (!this.resultsContainer) return;
+
+        if (!articles.length) {
+            this.resultsContainer.innerHTML = `
+                <div class="result-item">
+                    <div style="text-align:center;color:#666;padding:20px;">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <p>No results found</p>
+                        <small>Press Enter to search all articles</small>
+                    </div>
+                </div>
+            `;
+        } else {
+            // Create result items
+            const resultItems = articles.map(article =>
+                this.createLiveResultHTML(article, query)
+            ).join('');
+
+            // Add "See all results" option
+            const seeAllButton = `
+                <div class="result-item see-all-results" style="cursor:pointer;border-top:1px solid #eee;">
+                    <div style="text-align:center;color:#4a73e8;font-weight:bold;padding:10px;">
+                        <i class="fa-solid fa-arrow-right"></i>
+                        See all results for "${query}"
+                    </div>
+                </div>
+            `;
+
+            this.resultsContainer.innerHTML = resultItems + seeAllButton;
+
+            // Add click handler for "see all results"
+            const seeAllElement = this.resultsContainer.querySelector('.see-all-results');
+            if (seeAllElement) {
+                seeAllElement.addEventListener('click', executeSearch);
+            }
+        }
+
+        this.resultsContainer.style.display = 'block';
+    }
+
+    createLiveResultHTML(article, query) {
+        // Highlight matching terms
+        const highlightText = (text) => {
+            if (!text) return '';
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<mark>$1</mark>');
+        };
+
+        const title = highlightText(article.title || 'Untitled');
+        let description = article.description || 'No description available';
+
+        // Truncate description if too long
+        if (description.length > 80) {
+            description = description.substring(0, 80) + '…';
+        }
+        const highlightedDescription = highlightText(description);
+
+        // Handle image URL with fallback
+        const imageUrl = article.image_url || '../assets/img/placeholder.png';
+
+        return `
+            <div class="result-item" style="display:flex;align-items:center;gap:10px;padding:10px;cursor:pointer;">
+                <img src="${imageUrl}" 
+                     style="width:40px;height:40px;object-fit:cover;border-radius:4px;flex-shrink:0;" 
+                     onerror="this.src='../assets/img/placeholder.png'"
+                     alt="${article.title || 'Article image'}">
+                <div style="flex:1;min-width:0;">
+                    <div style="font-weight:bold;font-size:14px;line-height:1.3;margin-bottom:2px;">${title}</div>
+                    <div style="font-size:12px;color:#666;line-height:1.2;">${highlightedDescription}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    hideResults() {
+        if (this.resultsContainer) {
+            this.resultsContainer.style.display = 'none';
+        }
+    }
+
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
     }
 }
 
+// Initialize navbar search when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    setupSearch();
-    handleUser();
+    new NavbarSearch();
 });
