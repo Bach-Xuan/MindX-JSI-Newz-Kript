@@ -197,7 +197,6 @@ class NewsSearch {
             </div>
             <div class="article-content">
                 <div class="article-meta">
-                    <span class="article-category">${cat}</span>
                     ${pub ? `<span class="article-date">${pub}</span>` : ''}
                     <span class="article-source">${src}</span>
                 </div>
