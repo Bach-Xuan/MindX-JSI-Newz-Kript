@@ -1,4 +1,3 @@
-// main.js
 import { db } from './firebase-config.js';
 import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/11.8.0/firebase-firestore.js';
 
@@ -19,7 +18,8 @@ async function init() {
 
 // ─── 1) Fetch & Render External News API ──────────────────────────────────────
 async function fetchNewsData() {
-    const apiUrl = 'https://newsdata.io/api/1/latest?apikey=pub_6851165a998287bd633cd273478508dd9fdfe&image=1&language=en&removeduplicate=1&excludecategory=top';
+    const apiUrl =
+        'https://newsdata.io/api/1/latest?apikey=pub_6851165a998287bd633cd273478508dd9fdfe&image=1&language=en&removeduplicate=1&excludecategory=top';
 
     try {
         const res = await fetch(apiUrl);
@@ -44,7 +44,7 @@ async function fetchNewsData() {
 }
 
 function hideApiSections() {
-    ['.top-stories', '.latest-news', '.categories'].forEach(sel => {
+    ['.top-stories', '.latest-news', '.categories'].forEach((sel) => {
         const el = document.querySelector(sel);
         if (el) el.style.display = 'none';
     });
@@ -58,7 +58,7 @@ function renderTopStories(results) {
     }
     container.innerHTML = '';
 
-    results.slice(0, 2).forEach(article => {
+    results.slice(0, 2).forEach((article) => {
         const el = document.createElement('article');
         el.className = 'top-story';
         el.innerHTML = `
@@ -80,7 +80,7 @@ function renderLatestNews(results) {
     }
     container.innerHTML = '';
 
-    results.slice(2, 5).forEach(article => {
+    results.slice(2, 5).forEach((article) => {
         const item = document.createElement('div');
         item.className = 'latest-news-item';
         item.innerHTML = `
@@ -100,7 +100,7 @@ function renderCategories(results) {
     }
     container.innerHTML = '';
 
-    results.slice(5, 11).forEach(article => {
+    results.slice(5, 11).forEach((article) => {
         const cat = document.createElement('article');
         cat.className = 'category-item';
         cat.innerHTML = `
@@ -118,14 +118,14 @@ async function fetchFirestoreArticles() {
         const snapshot = await getDocs(collection(db, 'articles'));
         const articles = [];
 
-        snapshot.forEach(doc => {
+        snapshot.forEach((doc) => {
             const data = doc.data();
             articles.push({
                 id: doc.id,
                 title: data.title,
                 description: data.description,
                 content: data.content,
-                isFirestore: true
+                isFirestore: true,
             });
         });
 
@@ -138,9 +138,9 @@ async function fetchFirestoreArticles() {
 }
 
 function displayFirestoreArticles(articles) {
-    // choose <main> as parent container
-    const parent = document.querySelector('main');
-    if (!parent) return;
+    const top = document.querySelector('.top-stories');
+    if (!top) return;
+    const parent = top.parentNode;
 
     let section = document.querySelector('.non-api-section');
     if (!section) {
@@ -148,14 +148,15 @@ function displayFirestoreArticles(articles) {
         section.className = 'non-api-section';
         section.innerHTML = `
       <div class="non-api-articles"></div>`;
-        parent.appendChild(section);
+
+        parent.insertBefore(section, top.nextSibling);
     }
 
     const container = section.querySelector('.non-api-articles');
     if (!container) return;
     container.innerHTML = '';
 
-    articles.forEach(article => {
+    articles.forEach((article) => {
         const el = document.createElement('article');
         el.className = 'non-api';
         el.innerHTML = `
@@ -173,7 +174,7 @@ function displayFirestoreArticles(articles) {
 function selectAndGo(article) {
     const stored = {
         ...article,
-        id: article.link ? btoa(article.link) : article.id || ''
+        id: article.link ? btoa(article.link) : article.id || '',
     };
     localStorage.setItem('selectedArticle', JSON.stringify(stored));
     location.href = 'src/html/article.html';
